@@ -3,11 +3,12 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 const Recipe = require("../../models/Recipe");
-const getnew = require("../../routes/Recipe/functions/get");
+const getpopular = require("../../routes/Recipe/functions/getp");
 
 router.get("/",(req,res,next )=>{
 const num = req.body.num;
 
-    getnew(num,res);
+getpopular(num,res);
 
 });//needs more work 
+module.exports= router;

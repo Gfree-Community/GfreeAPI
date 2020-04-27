@@ -5,13 +5,15 @@ const mongoose = require('mongoose');
 module.exports=(req,res)=>{
     
     const recipe = new Recipe({
+        _id: new mongoose.Types.ObjectId,
         title : req.body.title,
         body: req.body.body,
         author: req.body.author,
         thumbnail:req.body.thumbnail,
         cookingTime: req.body.cookingTime,
         description: req.body.description,
-        tags: req.body.tags
+        tags: req.body.tags,
+        Likes: req.body.Likes
         
     });
 

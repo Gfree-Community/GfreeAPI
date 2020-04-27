@@ -17,6 +17,6 @@ const SArchiveSchema = mongoose.Schema({
 
 });
 
-StorySchema.plugin(timestamps);
+SArchiveSchema.plugin(timestamps);
 
 module.exports= mongoose.model('SArchive', SArchiveSchema);

@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 module.exports=(req,res)=>{
     
     const recipe = new Recipe({
+        _id: new mongoose.Types.ObjectId,
         title : req.body.title,
         body: req.body.body,
         author: req.body.author,

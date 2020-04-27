@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 module.exports=(num,res)=>{
 
     Recipe.find()
-    .sort({'createdAt':-1})
+    .sort({'Likes':-1})
     .limit(+num)
     .exec()
     .then(
@@ -18,6 +18,7 @@ module.exports=(num,res)=>{
                         body: doc.body,
                         author: doc.author,
                         likedBy: doc.likedBy,
+                        Likes:doc.Likes,
                         recipeComments: doc.recipeComments,
                         thumbnail:doc.thumbnail,
                         cookingTime: doc.cookingTime,

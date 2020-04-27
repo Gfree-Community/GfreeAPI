@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const timestamps = require('ongoose-timestamp');
+const timestamps = require('mongoose-timestamp');
 
-const RArchiveSchema = mongoose.Schema({
+const rArchiveSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     title: {type:String,required:false},
     body: {type:String,required:false},
@@ -15,6 +15,6 @@ const RArchiveSchema = mongoose.Schema({
     tags:[{tag:{type:String,required:false}}],
     
 });
-RecipeSchema.plugin(timestamps);
+rArchiveSchema.plugin(timestamps);
 
-module.exports= mongoose.Schema('RArchive', RArchiveSchema);
+module.exports= mongoose.model('RArchive', rArchiveSchema);

@@ -10,3 +10,4 @@ const id = req.body._id
     comment(id,req,res);
 
 });
+module.exports= router;

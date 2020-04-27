@@ -11,3 +11,4 @@ const num = req.body.num;
     getnew(num,res);
 
 });
+module.exports= router;

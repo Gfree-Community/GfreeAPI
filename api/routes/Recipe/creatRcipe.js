@@ -10,3 +10,4 @@ router.post("/",(req,res,next )=>{
     RP(req,res);
 
 });
+module.exports= router;

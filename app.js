@@ -4,14 +4,26 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+const archiveRecipe = require('./api/routes/Recipe/archiveRecipe');
+const commentRecipe = require('./api/routes/Recipe/commentRecipe');
+const creatRecipe= require('./api/routes/Recipe/creatRcipe');
+const getNewRecipe = require('./api/routes/Recipe/getNew');
+const getPopularRecipe = require('./api/routes/Recipe/getPopular');
+const likeRecipe =  require('./api/routes/Recipe/likes');
+const searchRecipe =  require('./api/routes/Recipe/searchRecipe');
+const updateRecipe =  require('./api/routes/Recipe/updateRecipe');
 
 
 
-// const pwddb = 'qwert12345A';
-// mongoose.connect('mongodb+srv://jlo:' + pwddb + '@node-rest-shop-ijnnd.mongodb.net/test?retryWrites=true&w=majority', {
-//   useNewUrlParser: true
-// });
 
+
+//..................................
+const pwddb = 'qwert12345A';
+mongoose.connect('mongodb+srv://jlo:' + pwddb + '@gfree-5rmfi.mongodb.net/test?retryWrites=true&w=majority', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+//..................................
 
 app.use(morgan('dev'));
 app.use('/images', express.static('images'));
@@ -30,7 +42,14 @@ app.use((req, res, next) => {
   next();
 });
 // routes which should handle requests
-
+app.use('/ArchiveRecipe',archiveRecipe);
+app.use('/postCommentOnRecipe',commentRecipe);
+app.use('/createRecipe',creatRecipe);
+app.use('/getNewestRecipesFeed',getNewRecipe);
+app.use('/getPopularRecipesFeed',getPopularRecipe);
+app.use('/likeRecipe',likeRecipe);
+//app.use('/searchRecipe', searchRecipe);
+app.use('/updateRecipe',updateRecipe);
 
 //handling errors
 app.use((req, res, next) => {
