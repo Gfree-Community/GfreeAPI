@@ -1,6 +1,7 @@
+const mongoose = require("mongoose");
+
 const Recipe = require("../models/Recipe");
 const ArchivedRecipe = require("../models/ArchivedRecipe");
-const mongoose = require("mongoose");
 
 const getNewestRecipesFeed = ({ count, page }) =>
   Recipe.find()

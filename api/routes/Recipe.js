@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const AsyncRouter = require("../../lib/AsyncRoute");
 
+const AsyncRouter = require("../../lib/AsyncRoute");
 const Recipe = require("../controllers/Recipe");
 
 const getNewestRecipesFeed = router.get("/", async (req, res, next) => {
