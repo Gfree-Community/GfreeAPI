@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-const Debugger = require("./lib/DebugMiddle")
+const Debugger = require("./lib/DebugMiddle");
 const Recipe = require("./api/routes/Recipe");
 
 //..................................
@@ -48,6 +48,7 @@ app.use("/findRecipe", Recipe.findRecipes);
 app.use("/createRecipe", Recipe.createRecipe);
 app.use("/updateRecipe", Recipe.updateRecipe);
 app.use("/ArchiveRecipe", Recipe.deleteRecipe);
+app.use("/likeRecipe", Recipe.likeRecipe);
 
 //handling errors
 app.use((req, res, next) => {

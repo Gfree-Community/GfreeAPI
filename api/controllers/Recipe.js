@@ -46,6 +46,12 @@ const updateRecipe = ({ _id, ...recipe }) =>
 
 const deleteRecipe = ({ _id }) => Recipe.remove({ _id }).exec();
 
+const likeRecipe = ({ authorId, recipe, likes }) =>
+  Recipe.updateOne(
+    { _id: recipe._id },
+    { $push: { likedBy: { author: authorId, likes } }, $set: { likes: +likes } }
+  ).exec();
+
 module.exports = {
   getNewestRecipesFeed,
   getPopularRecipesFeed,
@@ -54,4 +60,5 @@ module.exports = {
   createRecipe,
   updateRecipe,
   deleteRecipe,
+  likeRecipe,
 };
