@@ -4,8 +4,6 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-const commentRecipe = require("./api/routes/Recipe/commentRecipe");
-const likeRecipe = require("./api/routes/Recipe/likes");
 
 const Recipe = require("./api/routes/Recipe");
 
@@ -50,9 +48,6 @@ app.use("/findRecipe", Recipe.findRecipes);
 app.use("/updateRecipe", Recipe.updateRecipe);
 app.use("/ArchiveRecipe", Recipe.deleteRecipe);
 app.use("/createRecipe", Recipe.createRecipe);
-
-app.use("/postCommentOnRecipe", commentRecipe);
-app.use("/likeRecipe", likeRecipe);
 //app.use('/searchRecipe', searchRecipe);
 app.use("/updateRecipe", updateRecipe);
 
