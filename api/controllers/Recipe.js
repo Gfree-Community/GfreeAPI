@@ -24,7 +24,7 @@ const getPopularRecipesFeed = ({ count, page }) =>
       recipe: docs.map((doc) => doc),
     }));
 
-const findRecipe = ({ count, page, query }) =>
+const findRecipes = ({ count, page, query }) =>
   Recipe.find({ title: query })
     .limit(+count)
     .skip(count(page - 1))
@@ -45,7 +45,14 @@ const createRecipe = ({ recipe }) =>
 const updateRecipe = ({ _id, ...recipe }) =>
   Recipe.updateOne({ _id }, { $set: recipe }).exec();
 
-module.exports({
+const deleteRecipe = ({ _id }) => Recipe.remove({ _id }).exec();
+
+module.exports = {
   getNewestRecipesFeed,
   getPopularRecipesFeed,
-});
+  findRecipes,
+  createArchivedRecipe,
+  createRecipe,
+  updateRecipe,
+  deleteRecipe,
+};
