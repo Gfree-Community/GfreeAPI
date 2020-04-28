@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
+const Debugger = require("./lib/DebugMiddle")
 const Recipe = require("./api/routes/Recipe");
 
 //..................................
