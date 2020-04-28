@@ -4,7 +4,6 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-
 const Recipe = require("./api/routes/Recipe");
 
 //..................................
@@ -45,9 +44,9 @@ app.use((req, res, next) => {
 app.use("/getNewestRecipesFeed", Recipe.getNewestRecipesFeed);
 app.use("/getPopularRecipesFeed", Recipe.getPopularRecipesFeed);
 app.use("/findRecipe", Recipe.findRecipes);
+app.use("/createRecipe", Recipe.createRecipe);
 app.use("/updateRecipe", Recipe.updateRecipe);
 app.use("/ArchiveRecipe", Recipe.deleteRecipe);
-app.use("/createRecipe", Recipe.createRecipe);
 
 //handling errors
 app.use((req, res, next) => {
