@@ -48,8 +48,6 @@ app.use("/findRecipe", Recipe.findRecipes);
 app.use("/updateRecipe", Recipe.updateRecipe);
 app.use("/ArchiveRecipe", Recipe.deleteRecipe);
 app.use("/createRecipe", Recipe.createRecipe);
-//app.use('/searchRecipe', searchRecipe);
-app.use("/updateRecipe", updateRecipe);
 
 //handling errors
 app.use((req, res, next) => {

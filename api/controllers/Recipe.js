@@ -1,5 +1,5 @@
-const Recipe = require("../../../models/Recipe");
-const ArchivedRecipe = require("../../../models/ArchivedRecipe");
+const Recipe = require("../models/Recipe");
+const ArchivedRecipe = require("../models/ArchivedRecipe");
 const mongoose = require("mongoose");
 
 const getNewestRecipesFeed = ({ count, page }) =>
@@ -8,26 +8,24 @@ const getNewestRecipesFeed = ({ count, page }) =>
     .limit(+count)
     .skip(count * (page - 1))
     .exec()
-    .then(({ length, ...docs }) => ({
-      count: length,
-      recipe: docs.map((doc) => doc),
+    .then((docs) => ({
+      recipe: docs,
     }));
 
 const getPopularRecipesFeed = ({ count, page }) =>
   Recipe.find()
     .sort({ Likes: -1 })
     .limit(+count)
-    .skip(count * (pages - 1))
+    .skip(count * (page - 1))
     .exec()
-    .then(({ length, ...docs }) => ({
-      count: length,
-      recipe: docs.map((doc) => doc),
+    .then((docs) => ({
+      recipe: docs,
     }));
 
 const findRecipes = ({ count, page, query }) =>
   Recipe.find({ title: query })
     .limit(+count)
-    .skip(count(page - 1))
+    .skip(count * (page - 1))
     .exec();
 
 const createArchivedRecipe = ({ _id, ...recipe }) =>
@@ -38,8 +36,8 @@ const createArchivedRecipe = ({ _id, ...recipe }) =>
 
 const createRecipe = ({ recipe }) =>
   new Recipe({
-    _id: new mongoose.Types.ObjectId(),
     ...recipe,
+    _id: new mongoose.Types.ObjectId(),
   }).save();
 
 const updateRecipe = ({ _id, ...recipe }) =>
