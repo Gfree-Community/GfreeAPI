@@ -19,7 +19,7 @@ const RecipeSchema = mongoose.Schema({
       },
     },
   ],
-  recipeComments: [
+  comments: [
     {
       author: { type: Schema.Types.ObjectId, ref: "User" },
       comment: { type: String, required: false },

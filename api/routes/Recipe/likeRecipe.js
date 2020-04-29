@@ -14,7 +14,7 @@ const likeRecipe = router.post("/", async (req, res, next) => {
   const updatedRecipe = await Recipe.likeRecipe({ authorId, recipe, likes });
   res
     .status(201)
-    .send({ message: "Post has been liked", recipe: updatedRecipe });
+    .send({ message: "Post has been liked"});
 });
 
 module.exports = likeRecipe;

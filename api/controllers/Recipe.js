@@ -31,14 +31,14 @@ const findRecipes = ({ count, page, query }) =>
 
 const createArchivedRecipe = ({ _id, ...recipe }) =>
   new Recipe({
-    _id: new mongoose.Types.ObjectId(),
     ...recipe,
+    _id: new mongoose.Types.ObjectId(),
   }).save();
 
 const createRecipe = ({ recipe }) =>
   new Recipe({
-    ...recipe,
     _id: new mongoose.Types.ObjectId(),
+    ...recipe,
   }).save();
 
 const updateRecipe = ({ _id, ...recipe }) =>

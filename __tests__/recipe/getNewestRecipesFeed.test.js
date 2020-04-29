@@ -20,7 +20,7 @@ describe("getNewestRecipesFeed Endpoint", () => {
         expect.objectContaining({
           _id: expect.any(String),
           title: expect.any(String),
-          body: expect.any(Array),
+          body: expect.any,
           author: expect.any(String),
           thumbnail: expect.any(String),
           createdAt: expect.any(String),
