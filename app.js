@@ -5,10 +5,11 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 //Passport config
-require('./api/config/passport')
+require("./api/config/passport");
 
 const Debugger = require("./lib/DebugMiddle");
 const Recipe = require("./api/routes/Recipe");
+const User = require("./api/routes/User");
 
 //..................................
 const pwddb = "qwert12345A";
@@ -44,6 +45,11 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+// routes which should handle User related requests
+app.use("/signup", User.signup);
+app.use("/getUser", User.getUser);
+
 // routes which should handle requests
 app.use("/getNewestRecipesFeed", Recipe.getNewestRecipesFeed);
 app.use("/getPopularRecipesFeed", Recipe.getPopularRecipesFeed);

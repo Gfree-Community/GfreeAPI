@@ -2,21 +2,33 @@ const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const mongoose = require("mongoose");
 
-const setPassword = ({ password }) => bcrypt(password, 12);
+const setPassword = ({ password }) =>
+  new Promise((resolve, reject) => {
+    bcrypt.hash(password, 11, function (err, hash) {
+      if (err) reject(err);
+      resolve(hash);
+    });
+  });
 
-const validatePassword = ({ password, hash }) => bcrypt.compare(password, hash);
+const validatePassword = ({ password, hash }) =>
+  new Promise((resolve, reject) => {
+    bcrypt.compare(password, hash, function (err, hash) {
+      if (err) reject(err);
+      resolve(hash);
+    });
+  });
 
-const findUser = ({ email }) => User.findOne({ email });
+const findUser = ({ email }) => User.findOne({ email }).exec();
 
 const createUser = ({ email, password, fullname }) =>
   new User({
     _id: new mongoose.Types.ObjectId(),
     email,
     password,
-    fullname
+    fullname,
   }).save();
 
-const findUsers = () => User.find().sort({ createdAt: -1 }).limit(10).exec();
+const findUsers = () => User.find().exec();
 
 module.exports = {
   setPassword,

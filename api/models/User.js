@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const timestamps = require("mongoose-timestamp");
 
+const Schema = mongoose.Schema;
 const UserSchema = mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId,
+  _id: Schema.Types.ObjectId,
   email: {
     type: String,
     required: true,

@@ -42,10 +42,19 @@ passport.use(
       try {
         const { fullname } = req.body.user;
         const user = await User.findUser({ email });
-        if (user !== null)
-          return done(null, false, { message: "Email already taken" });
-        const hashedPassword = await User.setPassword({ password });
-        User.createUser({ email, password: hashedPassword, fullname });
+        if (user !== null) {
+          return done(null, false, {
+            message: "User already Exist",
+          });
+        } else {
+          const hashedPassword = await User.setPassword({ password });
+          const createdUser = await User.createUser({
+            email,
+            password: hashedPassword,
+            fullname,
+          });
+          return done(null, createdUser);
+        }
       } catch (err) {
         done(err);
       }
