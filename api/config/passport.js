@@ -21,6 +21,7 @@ passport.use(
         ) {
           return done(null, false, { message: `Email or password is invalid` });
         }
+        return done(null, user);
       } catch (err) {
         done(err);
       }

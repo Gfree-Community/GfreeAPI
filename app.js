@@ -3,6 +3,7 @@ const app = express();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const passport = require("passport");
 
 //Passport config
 require("./api/config/passport");
@@ -32,6 +33,7 @@ app.use(
   })
 );
 app.use(bodyParser.json());
+app.use(passport.initialize());
 //cors handelling
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -47,7 +49,9 @@ app.use((req, res, next) => {
 });
 
 // routes which should handle User related requests
+app.use("/signin", User.signin);
 app.use("/signup", User.signup);
+app.use(User.authenticate)
 app.use("/getUser", User.getUser);
 
 // routes which should handle requests
