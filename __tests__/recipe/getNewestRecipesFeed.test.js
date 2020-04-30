@@ -1,5 +1,9 @@
 const request = require("supertest");
 const app = require("../../server");
+const { setupDB } = require("../test-setup")
+
+// Initialisation DB
+setupDB();
 
 const getNewestRecipesFeed = request(app).get("/getNewestRecipesFeed");
 

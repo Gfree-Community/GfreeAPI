@@ -4,6 +4,9 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
+//Passport config
+require('./api/config/passport')
+
 const Debugger = require("./lib/DebugMiddle");
 const Recipe = require("./api/routes/Recipe");
 

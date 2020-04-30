@@ -27,7 +27,7 @@ const findRecipes = ({ count, page, query }) =>
   Recipe.find({ title: query })
     .limit(+count)
     .skip(count * (page - 1))
-    .exec();
+    .exec();33
 
 const createArchivedRecipe = ({ _id, ...recipe }) =>
   new Recipe({
@@ -38,6 +38,9 @@ const createArchivedRecipe = ({ _id, ...recipe }) =>
 const createRecipe = ({ recipe }) =>
   new Recipe({
     _id: new mongoose.Types.ObjectId(),
+    comments: [],
+    likedBy: [],
+    likes: 0,
     ...recipe,
   }).save();
 
