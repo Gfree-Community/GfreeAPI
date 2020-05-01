@@ -7,7 +7,7 @@ const authenticate = router.use(async (req, res, next) => {
       next(err);
     }
     if (info !== undefined) {
-      res.status(403).json(info);
+      res.status(401).json(info);
     } else {
       // pass the user object to following middleware
       req.user = user;

@@ -21,6 +21,7 @@ mongoose.connect(
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    autoIndex: true
   }
 );
 //..................................
@@ -48,16 +49,21 @@ app.use((req, res, next) => {
   next();
 });
 
-// routes which should handle User related requests
+// ------------- Routes --------------
+// User Routes
 app.use("/signin", User.signin);
 app.use("/signup", User.signup);
-app.use(User.authenticate)
-app.use("/getUser", User.getUser);
 
-// routes which should handle requests
+// Recipe Routes
 app.use("/getNewestRecipesFeed", Recipe.getNewestRecipesFeed);
 app.use("/getPopularRecipesFeed", Recipe.getPopularRecipesFeed);
 app.use("/findRecipe", Recipe.findRecipes);
+
+// -------Routes that require Authorisation------------
+app.use(User.authenticate);
+app.use("/getUser", User.getUser);
+
+//Recipe Routes
 app.use("/createRecipe", Recipe.createRecipe);
 app.use("/updateRecipe", Recipe.updateRecipe);
 app.use("/ArchiveRecipe", Recipe.deleteRecipe);

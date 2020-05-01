@@ -33,18 +33,16 @@ module.exports = {
     // Connect to Mongoose
     beforeAll(async () => {
       const url = `mongodb+srv://amine:zebfkark123@cluster0-nh11q.mongodb.net/test?retryWrites=true&w=majority`;
-      await mongoose.connect(url, { useNewUrlParser: true });
+      await mongoose.connect(url, {
+        useNewUrlParser: true,
+        autoIndex: true,
+        useUnifiedTopology: true,
+      });
     });
-
     // Cleans up database between each test
     afterEach(async () => {
       await removeAllCollections();
     });
 
-    // Disconnect Mongoose
-    afterAll(async () => {
-      await dropAllCollections();
-      await mongoose.connection.close();
-    });
   },
 };

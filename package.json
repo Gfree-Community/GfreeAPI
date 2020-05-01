@@ -29,7 +29,7 @@
     "supertest": "^4.0.2"
   },
   "scripts": {
-    "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
+    "test": "cross-env NODE_ENV=test jest --runInBand --detectOpenHandles --forceExit --testTimeout=15000",
     "start": "node server.js"
   },
   "repository": {

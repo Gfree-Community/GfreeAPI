@@ -10,13 +10,8 @@ const setPassword = ({ password }) =>
     });
   });
 
-const validatePassword = ({ password, hash }) =>
-  new Promise((resolve, reject) => {
-    bcrypt.compare(password, hash, function (err, hash) {
-      if (err) reject(err);
-      resolve(hash);
-    });
-  });
+const validatePassword = ({ password, hash }) => 
+bcrypt.compareSync(password, hash);
 
 const findUser = ({ email }) => User.findOne({ email }).exec();
 

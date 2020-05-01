@@ -12,19 +12,19 @@ const signin = router.use(async (req, res, next) => {
         next(err);
       }
       if (info !== undefined) {
-        res.status(403).json(info);
+        console.log(info);
+        res.status(422).json(info);
       } else {
         // pass the user object to following middleware
         req.logIn(user, (err) => {
-          User.findUser({ email: user.email }).then((user) => {
-            const token = jwt.sign({ id: user.email }, "t7m08", {
-              expiresIn: "15d",
-            });
-            res.status(200).json({
-              auth: true,
-              token,
-              message: "user has been found and logged in",
-            });
+          const token = jwt.sign({ id: user.email }, "t7m08", {
+            expiresIn: "15d",
+          });
+          res.status(201).json({
+            auth: true,
+            token,
+            user,
+            message: "user has been found and logged in",
           });
         });
       }

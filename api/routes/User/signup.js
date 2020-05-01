@@ -10,7 +10,7 @@ const signup = router.post("/", async (req, res, next) => {
     if (info !== undefined) {
       res.status(403).json(info);
     } else {
-      res.status(201).json({ message: "User has been created" });
+      res.status(201).json({ message: "User has been created", user });
     }
   })(req, res, next);
 });
