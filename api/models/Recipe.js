@@ -1,20 +1,35 @@
-const mongoose = require('mongoose');
-const timestamps = require('mongoose-timestamp');
+const mongoose = require("mongoose");
+const timestamps = require("mongoose-timestamp");
+const { Schema } = mongoose;
 const RecipeSchema = mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
-    title: {type:String,required:false},
-    body: {type:String,required:false},
-    author: {type:String,required:false},
-    Likes: {type:Number,required:false},
-    likedBy:[{fullname:{type:String,required:false}}],
-    recipeComments:[{fullname:{type:String,required:false},
-                comment:{type:String,required:false}}],
-    thumbnail:{type:String,required:false},
-    cookingTime:{type:String,required:false},
-    description:{type:String,required:false},
-    tags:[{tag:{type:String,required:false}}],
-    
+  _id: mongoose.Schema.Types.ObjectId,
+  title: { type: String, required: true },
+  body: {
+    ingrdients: { type: String, required: true },
+    preparations: { type: String, required: true },
+  },
+  author: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  Likes: { type: Number, required: false },
+  likedBy: [
+    {
+      author: { type: Schema.Types.ObjectId, ref: "User" },
+      likes: {
+        type: Number,
+        required: true,
+      },
+    },
+  ],
+  comments: [
+    {
+      author: { type: Schema.Types.ObjectId, ref: "User" },
+      comment: { type: String, required: false },
+    },
+  ],
+  thumbnail: { type: String, required: true },
+  cookingTime: { type: String, required: true },
+  description: { type: String, required: true },
+  tags: [{ tag: { type: String, required: true } }],
 });
 RecipeSchema.plugin(timestamps);
 
-module.exports= mongoose.model('Recipe', RecipeSchema);
+module.exports = mongoose.model("Recipe", RecipeSchema);

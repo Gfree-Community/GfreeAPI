@@ -1,13 +1,14 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const mongoose = require('mongoose');
 
-const Recipe = require("../../models/Recipe");
-const comment = require("../../routes/Recipe/functions/update");
+const Recipe = require("../../controllers/Recipe");
 
-router.patch("/",(req,res,next )=>{
-const id = req.body._id
-    comment(id,req,res);
-
+const updateRecipe = router.post("/", async (req, res, next) => {
+  const {
+    body: { recipe },
+  } = req;
+  const UpdatedRecipe = await Recipe.updateRecipe(recipe);
+  res.status(201).send(UpdatedRecipe);
 });
-module.exports= router;
+
+module.exports = updateRecipe;

@@ -1,59 +1,77 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const morgan = require("morgan");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const passport = require("passport");
 
-const archiveRecipe = require('./api/routes/Recipe/archiveRecipe');
-const commentRecipe = require('./api/routes/Recipe/commentRecipe');
-const creatRecipe= require('./api/routes/Recipe/creatRcipe');
-const getNewRecipe = require('./api/routes/Recipe/getNew');
-const getPopularRecipe = require('./api/routes/Recipe/getPopular');
-const likeRecipe =  require('./api/routes/Recipe/likes');
-const searchRecipe =  require('./api/routes/Recipe/searchRecipe');
-const updateRecipe =  require('./api/routes/Recipe/updateRecipe');
+//Passport config
+require("./api/config/passport");
 
-
-
-
+const Debugger = require("./lib/DebugMiddle");
+const Recipe = require("./api/routes/Recipe");
+const User = require("./api/routes/User");
 
 //..................................
-const pwddb = 'qwert12345A';
-mongoose.connect('mongodb+srv://jlo:' + pwddb + '@gfree-5rmfi.mongodb.net/test?retryWrites=true&w=majority', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+const pwddb = "qwert12345A";
+mongoose.connect(
+  "mongodb+srv://jlo:" +
+    pwddb +
+    "@gfree-5rmfi.mongodb.net/test?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    autoIndex: true
+  }
+);
 //..................................
 
-app.use(morgan('dev'));
-app.use('/images', express.static('images'));
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
+app.use(morgan("dev"));
+app.use("/images", express.static("images"));
+app.use(
+  bodyParser.urlencoded({
+    extended: false,
+  })
+);
 app.use(bodyParser.json());
+app.use(passport.initialize());
 //cors handelling
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origins,X-Requested-With, Content-Type, Accept, Authorization');
-  if (req.method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origins,X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
     return res.status(200).json({});
   }
   next();
 });
-// routes which should handle requests
-app.use('/ArchiveRecipe',archiveRecipe);
-app.use('/postCommentOnRecipe',commentRecipe);
-app.use('/createRecipe',creatRecipe);
-app.use('/getNewestRecipesFeed',getNewRecipe);
-app.use('/getPopularRecipesFeed',getPopularRecipe);
-app.use('/likeRecipe',likeRecipe);
-//app.use('/searchRecipe', searchRecipe);
-app.use('/updateRecipe',updateRecipe);
+
+// ------------- Routes --------------
+// User Routes
+app.use("/signin", User.signin);
+app.use("/signup", User.signup);
+
+// Recipe Routes
+app.use("/getNewestRecipesFeed", Recipe.getNewestRecipesFeed);
+app.use("/getPopularRecipesFeed", Recipe.getPopularRecipesFeed);
+app.use("/findRecipe", Recipe.findRecipes);
+
+// -------Routes that require Authorisation------------
+app.use(User.authenticate);
+app.use("/getUser", User.getUser);
+
+//Recipe Routes
+app.use("/createRecipe", Recipe.createRecipe);
+app.use("/updateRecipe", Recipe.updateRecipe);
+app.use("/ArchiveRecipe", Recipe.deleteRecipe);
+app.use("/likeRecipe", Recipe.likeRecipe);
 
 //handling errors
 app.use((req, res, next) => {
-  const error = new Error('Not Found');
+  const error = new Error("Not Found");
   error.status = 404;
   next(error);
 });
@@ -62,8 +80,8 @@ app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({
     error: {
-      message: error.message
-    }
+      message: error.message,
+    },
   });
 });
 

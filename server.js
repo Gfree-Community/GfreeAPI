@@ -5,3 +5,5 @@ const port =  5000;
 const server = http.createServer(app);
 
 server.listen(port);
+
+module.exports = server
