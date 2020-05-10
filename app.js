@@ -62,7 +62,7 @@ app.use("/findRecipe", Recipe.findRecipes);
 // -------Routes that require Authorisation------------
 app.use(User.authenticate);
 app.use("/getUser", User.getUser);
-
+app.use("/updateProfile",User.updateProfile);
 //Recipe Routes
 app.use("/createRecipe", Recipe.createRecipe);
 app.use("/updateRecipe", Recipe.updateRecipe);

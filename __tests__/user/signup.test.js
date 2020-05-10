@@ -20,7 +20,6 @@ describe("/signup Endpoint", () => {
         user: expect.objectContaining({
           _id: expect.any(String),
           email: expect.any(String),
-          password: expect.any(String),
           fullname: expect.any(String),
         }),
       })
