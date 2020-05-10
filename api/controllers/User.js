@@ -10,11 +10,21 @@ const setPassword = ({ password }) =>
     });
   });
 
-const validatePassword = ({ password, hash }) => 
-bcrypt.compareSync(password, hash);
+const validatePassword = ({ password, hash }) =>
+  bcrypt.compareSync(password, hash);
 
 const findUser = ({ email }) => User.findOne({ email }).exec();
-
+const updateUser = (_id, { email, fullname, about, profilePicture, links }) =>
+  User.updateOne(
+    { _id },
+    {
+      email,
+      fullname,
+      about,
+      profilePicture,
+      links,
+    }
+  );
 const createUser = ({ email, password, fullname }) =>
   new User({
     _id: new mongoose.Types.ObjectId(),
@@ -30,5 +40,6 @@ module.exports = {
   validatePassword,
   findUser,
   createUser,
+  updateUser,
   findUsers,
 };

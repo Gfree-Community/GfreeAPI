@@ -16,6 +16,12 @@ const UserSchema = mongoose.Schema({
   profilePicture: { type: String, required: false },
   stories: [{ type: Schema.Types.ObjectId, ref: "Story" }],
   recipes: [{ type: Schema.Types.ObjectId, ref: "Recipe" }],
+  links: {
+    website: { type: String },
+    instagram: { type: String },
+    twitter: { type: String },
+    facebook: { type: String },
+  },
   likedStories: [
     {
       story: { type: Schema.Types.ObjectId, ref: "Story" },

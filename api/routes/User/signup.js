@@ -6,10 +6,11 @@ const signup = router.post("/", async (req, res, next) => {
     if (err) {
       next(err);
     }
-    console.log(info);
     if (info !== undefined) {
       res.status(403).json(info);
     } else {
+      // remove password property for security reasons.
+      delete user.password
       res.status(201).json({ message: "User has been created", user });
     }
   })(req, res, next);
