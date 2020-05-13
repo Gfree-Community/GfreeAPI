@@ -4,12 +4,16 @@ const signup = require("./signup");
 const authenticate = require("./authenticate");
 const signin = require("./signin");
 const getUser = require("./getUser");
-const updateProfile = require("./updateProfile")
+const updateProfile = require("./updateProfile");
+const requestPasswordChange = require("./requestPasswordChange");
+const resetPassword = require("./resetPassword");
 
 module.exports = {
   signin,
   signup,
   authenticate,
   getUser,
-  updateProfile
+  updateProfile,
+  requestPasswordChange,
+  resetPassword
 };

@@ -25,6 +25,15 @@ const updateUser = (_id, { email, fullname, about, profilePicture, links }) =>
       links,
     }
   );
+
+const changePassword = (_id, { hashedPassword }) =>
+  User.updateOne(
+    { _id },
+    {
+      password: hashedPassword,
+    }
+  );
+
 const createUser = ({ email, password, fullname }) =>
   new User({
     _id: new mongoose.Types.ObjectId(),
@@ -42,4 +51,5 @@ module.exports = {
   createUser,
   updateUser,
   findUsers,
+  changePassword,
 };

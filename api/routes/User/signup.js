@@ -7,6 +7,7 @@ const signup = router.post("/", async (req, res, next) => {
       next(err);
     }
     if (info !== undefined) {
+      console.log(info,req.body)
       res.status(403).json(info);
     } else {
       // remove password property for security reasons.
