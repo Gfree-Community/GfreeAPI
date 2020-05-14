@@ -19,7 +19,9 @@ const mailOptions = ({ token, email }) => ({
   subject: "Gfree, Password Reset Request",
   text: "Click the link below to reset your password",
   html: `<strong>
-  <a href={http:localhost:3000/profile/change-password?token=${token}}>Change Password</a></strong>`,
+  <a href={http:localhost:3000/profile/change-password?token=${token}}>Change Password</a></strong>
+  <strong> http:localhost:3000/profile/change-password?token=${token}</strong>
+  `,
 });
 
 const requestPasswordChange = router.post("/", async (req, res, next) => {
@@ -36,7 +38,7 @@ const requestPasswordChange = router.post("/", async (req, res, next) => {
   });
 
   await transporter.sendMail(mailOptions({ token, email }));
-  res.status(201);
+  res.status(201).json({message: "Check your email"});
 });
 
 module.exports = requestPasswordChange;
