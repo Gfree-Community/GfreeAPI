@@ -22,12 +22,12 @@ const mailOptions = ({ token, email }) => ({
   <a href={http:localhost:3000/profile/change-password?token=${token}}>Change Password</a></strong>`,
 });
 
-const requestPasswordChange = router.body("/", async (req, res, next) => {
+const requestPasswordChange = router.post("/", async (req, res, next) => {
   const { email } = req.body;
   const user = await User.findUser({ email });
   /** Make sure if the user exists */
   if (!user) {
-    res.send(401).json({ message: "Email doesn't exist" });
+    res.send(403).json({ message: "Email doesn't exist" });
     return;
   }
   /** We'll use this JWT token to allow user to change password. */
