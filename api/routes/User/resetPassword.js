@@ -6,7 +6,7 @@ const ResetPassword = router.post("/", async (req, res, next) => {
   const { password } = req.body.user;
   const hashedPassword = await User.setPassword({ password });
   await User.changePassword(_id, { hashedPassword });
-  req.send(201).json({ message: "Password Changed Successfuly" });
+  res.status(201).json({ message: "Password Changed Successfuly" });
 });
 
 module.exports = ResetPassword;

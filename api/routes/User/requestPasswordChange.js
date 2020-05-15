@@ -25,11 +25,13 @@ const mailOptions = ({ token, email }) => ({
 });
 
 const requestPasswordChange = router.post("/", async (req, res, next) => {
-  const { email } = req.body;
+  const {
+    user: { email },
+  } = req.body;
   const user = await User.findUser({ email });
   /** Make sure if the user exists */
   if (!user) {
-    res.send(403).json({ message: "Email doesn't exist" });
+    res.send(404).json({ message: "Email doesn't exist" });
     return;
   }
   /** We'll use this JWT token to allow user to change password. */
@@ -38,7 +40,7 @@ const requestPasswordChange = router.post("/", async (req, res, next) => {
   });
 
   await transporter.sendMail(mailOptions({ token, email }));
-  res.status(201).json({message: "Check your email"});
+  res.status(201).json({ message: "Check your email" });
 });
 
 module.exports = requestPasswordChange;
