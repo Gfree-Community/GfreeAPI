@@ -7,6 +7,7 @@ const getUser = require("./getUser");
 const updateProfile = require("./updateProfile");
 const requestPasswordChange = require("./requestPasswordChange");
 const resetPassword = require("./resetPassword");
+const getProfile = require("./getProfile");
 
 module.exports = {
   signin,
@@ -15,5 +16,6 @@ module.exports = {
   getUser,
   updateProfile,
   requestPasswordChange,
-  resetPassword
+  getProfile,
+  resetPassword,
 };
