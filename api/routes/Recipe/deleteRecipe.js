@@ -12,4 +12,4 @@ const deleteRecipe = router.post("/", async (req, res, next) => {
   res.status(201).send({ message: "Post has been deleted" });
 });
 
-module.exports = deleteRecipe
+module.exports = deleteRecipe;
