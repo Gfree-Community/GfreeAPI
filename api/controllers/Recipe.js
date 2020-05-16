@@ -27,7 +27,7 @@ const findRecipes = ({ count, page, query }) =>
   Recipe.find({ title: query })
     .limit(+count)
     .skip(count * (page - 1))
-    .exec();33
+    .exec();
 
 const createArchivedRecipe = ({ _id, ...recipe }) =>
   new Recipe({
