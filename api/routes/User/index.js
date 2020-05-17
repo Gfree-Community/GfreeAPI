@@ -13,11 +13,11 @@ module.exports = {
   signin,
   signup,
   authenticate,
+  getProfile,
   ...AsyncRouter({
     getUser,
     updateProfile,
     requestPasswordChange,
-    getProfile,
     resetPassword,
   }),
 };
