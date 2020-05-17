@@ -53,6 +53,7 @@ app.use((req, res, next) => {
 // User Routes
 app.use("/signin", User.signin);
 app.use("/signup", User.signup);
+app.use("/getProfile", User.getProfile);
 app.use("/requestPasswordChange", User.requestPasswordChange);
 
 // Recipe Routes

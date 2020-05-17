@@ -19,7 +19,7 @@ const signin = router.use(async (req, res, next) => {
         req.logIn(user, (err) => {
           const token = jwt.sign({ id: user.email }, "t7m08", {
             expiresIn: "15d",
-          });
+          }); 
           res.status(201).json({
             auth: true,
             token,
