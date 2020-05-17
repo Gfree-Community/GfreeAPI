@@ -14,7 +14,7 @@ const validatePassword = ({ password, hash }) =>
   bcrypt.compareSync(password, hash);
 
 const findUser = ({ email }) => User.findOne({ email }).exec();
-const findUserById = ({_id})=> User.findById(_id).exec();
+const findUserById = ({ _id }) => User.findById(_id).exec();
 
 const updateUser = (_id, { email, fullname, about, profilePicture, links }) =>
   User.updateOne(
@@ -44,6 +44,14 @@ const createUser = ({ email, password, fullname }) =>
     fullname,
   }).save();
 
+const addCreatedRecipe = ({ _id, recipeId }) =>
+  User.updateOne(
+    { _id },
+    {
+      $push: { recipes: recipeId },
+    }
+  );
+
 const findUsers = () => User.find().exec();
 
 module.exports = {
@@ -54,5 +62,6 @@ module.exports = {
   updateUser,
   findUsers,
   changePassword,
-  findUserById
+  findUserById,
+  addCreatedRecipe,
 };

@@ -60,6 +60,7 @@ app.use("/requestPasswordChange", User.requestPasswordChange);
 app.use("/getNewestRecipesFeed", Recipe.getNewestRecipesFeed);
 app.use("/getPopularRecipesFeed", Recipe.getPopularRecipesFeed);
 app.use("/findRecipe", Recipe.findRecipes);
+app.use("/getRecipe", Recipe.getRecipe);
 
 // -------Routes that require Authorisation------------
 app.use(User.authenticate);

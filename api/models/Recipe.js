@@ -5,7 +5,7 @@ const RecipeSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   title: { type: String, required: true },
   body: {
-    ingrdients: { type: String, required: true },
+    ingredients: { type: String, required: true },
     preparations: { type: String, required: true },
   },
   author: { type: Schema.Types.ObjectId, ref: "User", required: true },
@@ -28,7 +28,7 @@ const RecipeSchema = mongoose.Schema({
   thumbnail: { type: String, required: true },
   cookingTime: { type: String, required: true },
   description: { type: String, required: true },
-  tags: [{ tag: { type: String, required: true } }],
+  tags: [{ type: String, required: true }],
 });
 RecipeSchema.plugin(timestamps);
 

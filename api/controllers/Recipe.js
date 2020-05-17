@@ -13,6 +13,9 @@ const getNewestRecipesFeed = ({ count, page }) =>
       recipe: docs,
     }));
 
+const getRecipe = ({ _id }) =>
+  Recipe.findOne({ _id }).populate("author").populate("comments").exec();
+
 const getPopularRecipesFeed = ({ count, page }) =>
   Recipe.find()
     .sort({ Likes: -1 })
@@ -59,6 +62,7 @@ module.exports = {
   getNewestRecipesFeed,
   getPopularRecipesFeed,
   findRecipes,
+  getRecipe,
   createArchivedRecipe,
   createRecipe,
   updateRecipe,
