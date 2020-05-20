@@ -14,7 +14,7 @@ const getNewestRecipesFeed = ({ count, page }) =>
     }));
 
 const getRecipe = ({ _id }) =>
-  Recipe.findOne({ _id }).populate("author").populate("comments").exec();
+  Recipe.findOne({ _id }).populate("author").populate("comments.author").exec();
 
 const getPopularRecipesFeed = ({ count, page }) =>
   Recipe.find()

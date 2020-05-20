@@ -76,7 +76,7 @@ describe("/getRecipe endpoint", () => {
       });
 
     const recipe = res.body.recipe;
-    
+
     expect(res.statusCode).toEqual(200);
     expect(recipe.comments[0].comment).toEqual("Hello world");
 
