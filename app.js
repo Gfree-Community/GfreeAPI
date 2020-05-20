@@ -73,6 +73,7 @@ app.use("/createRecipe", Recipe.createRecipe);
 app.use("/updateRecipe", Recipe.updateRecipe);
 app.use("/ArchiveRecipe", Recipe.deleteRecipe);
 app.use("/likeRecipe", Recipe.likeRecipe);
+app.use("/addComment", Recipe.comment);
 
 //handling errors
 app.use((req, res, next) => {

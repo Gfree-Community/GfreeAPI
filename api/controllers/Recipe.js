@@ -38,6 +38,14 @@ const createArchivedRecipe = ({ _id, ...recipe }) =>
     _id: new mongoose.Types.ObjectId(),
   }).save();
 
+const addComment = ({ recipeId, comment: { author, comment } }) =>
+  Recipe.updateOne(
+    { _id: recipeId },
+    {
+      $push: { comments: [{ author, comment: comment }] },
+    }
+  ).exec();
+
 const createRecipe = ({ recipe }) =>
   new Recipe({
     _id: new mongoose.Types.ObjectId(),
@@ -68,4 +76,5 @@ module.exports = {
   updateRecipe,
   deleteRecipe,
   likeRecipe,
+  addComment,
 };

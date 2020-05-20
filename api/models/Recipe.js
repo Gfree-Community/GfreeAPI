@@ -9,7 +9,7 @@ const RecipeSchema = mongoose.Schema({
     preparations: { type: String, required: true },
   },
   author: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  Likes: { type: Number, required: false },
+  likes: { type: Number, required: false },
   likedBy: [
     {
       author: { type: Schema.Types.ObjectId, ref: "User" },

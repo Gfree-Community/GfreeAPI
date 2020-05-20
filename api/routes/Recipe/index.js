@@ -8,6 +8,7 @@ const createRecipe = require("./createRecipe");
 const updateRecipe = require("./updateRecipe");
 const likeRecipe = require("./likeRecipe");
 const getRecipe = require("./getRecipe");
+const comment = require("./comment");
 
 // Helper function to Apply AsyncRoute to all Routers in the current Dir
 module.exports = AsyncRouter({
@@ -19,4 +20,5 @@ module.exports = AsyncRouter({
   createRecipe,
   updateRecipe,
   likeRecipe,
+  comment,
 });
