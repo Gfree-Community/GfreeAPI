@@ -11,7 +11,7 @@ require("./api/config/passport");
 const Debugger = require("./lib/DebugMiddle");
 const Recipe = require("./api/routes/Recipe");
 const User = require("./api/routes/User");
-
+const Aws = require("./api/routes/AWS");
 //..................................
 const pwddb = "qwert12345A";
 mongoose.connect(
@@ -74,6 +74,9 @@ app.use("/updateRecipe", Recipe.updateRecipe);
 app.use("/ArchiveRecipe", Recipe.deleteRecipe);
 app.use("/likeRecipe", Recipe.likeRecipe);
 app.use("/addComment", Recipe.comment);
+
+//Aws Routes
+app.use("/getS3Signature", Aws.sendUploadSignature);
 
 //handling errors
 app.use((req, res, next) => {
