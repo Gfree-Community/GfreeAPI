@@ -7,23 +7,23 @@ const passport = require("passport");
 
 //Passport config
 require("./api/config/passport");
-
 const Debugger = require("./lib/DebugMiddle");
 const Recipe = require("./api/routes/Recipe");
 const User = require("./api/routes/User");
 const Aws = require("./api/routes/AWS");
 //..................................
 const pwddb = "qwert12345A";
-mongoose.connect(
-  "mongodb+srv://jlo:" +
-    pwddb +
-    "@gfree-5rmfi.mongodb.net/test?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    autoIndex: true,
-  }
-);
+process.env.NODE_ENV !== "test" &&
+  mongoose.connect(
+    "mongodb+srv://jlo:" +
+      pwddb +
+      "@gfree-5rmfi.mongodb.net/test?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      autoIndex: true,
+    }
+  );
 //..................................
 
 app.use(morgan("dev"));

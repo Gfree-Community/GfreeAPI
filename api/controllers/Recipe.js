@@ -60,11 +60,25 @@ const updateRecipe = ({ _id, ...recipe }) =>
 
 const deleteRecipe = ({ _id }) => Recipe.remove({ _id }).exec();
 
-const likeRecipe = ({ authorId, recipe, likes }) =>
+const like = ({ author, recipeId, likes, totalLikes }) =>
   Recipe.updateOne(
-    { _id: recipe._id },
-    { $push: { likedBy: { author: authorId, likes } }, $set: { likes: +likes } }
+    { _id: recipeId },
+    { $push: { likedBy: [{ author, likes }] }, likes: totalLikes }
   ).exec();
+
+const updateLike = ({ authorId, recipeId, likes, totalLikes }) =>
+  Recipe.findByIdAndUpdate(
+    {
+      _id: recipeId,
+    },
+    {
+      $set: { "likedBy.$[elem].likes": +likes },
+      likes: totalLikes,
+    },
+    {
+      arrayFilters: [{ "elem.author": authorId }],
+    }
+  );
 
 module.exports = {
   getNewestRecipesFeed,
@@ -75,6 +89,7 @@ module.exports = {
   createRecipe,
   updateRecipe,
   deleteRecipe,
-  likeRecipe,
+  like,
+  updateLike,
   addComment,
 };
