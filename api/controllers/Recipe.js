@@ -13,18 +13,44 @@ const getNewestRecipesFeed = ({ count, page }) =>
       recipe: docs,
     }));
 
-const getRecipe = ({ _id }) =>
-  Recipe.findOne({ _id }).populate("author").populate("comments.author").exec();
-
 const getPopularRecipesFeed = ({ count, page }) =>
   Recipe.find()
     .sort({ Likes: -1 })
+    .limit(+count)
+    .skip(count * (page - 1))
+    .exec();
+
+const getPopularIn = ({ count, page, time }) =>
+  Recipe.find({
+    createdAt: {
+      $gte:
+        new Date(new Date() - new Date().getTimezoneOffset()).getTime() - time,
+    },
+  })
+    .populate("author")
+    .sort({ Likes: -1 })
+    .limit(+count)
+    .skip(count * (page - 1))
+    .exec();
+
+const getNewestIn = ({ count, page, time }) =>
+  Recipe.find({
+    createdAt: {
+      $lte:
+        new Date(new Date() - new Date().getTimezoneOffset()).getTime() - time,
+    },
+  })
+    .populate("author")
+    .sort({ createdAt: -1 })
     .limit(+count)
     .skip(count * (page - 1))
     .exec()
     .then((docs) => ({
       recipe: docs,
     }));
+
+const getRecipe = ({ _id }) =>
+  Recipe.findOne({ _id }).populate("author").populate("comments.author").exec();
 
 const findRecipes = ({ count, page, query }) =>
   Recipe.find({ title: query })
@@ -83,6 +109,8 @@ const updateLike = ({ authorId, recipeId, likes, totalLikes }) =>
 module.exports = {
   getNewestRecipesFeed,
   getPopularRecipesFeed,
+  getPopularIn,
+  getNewestIn,
   findRecipes,
   getRecipe,
   createArchivedRecipe,

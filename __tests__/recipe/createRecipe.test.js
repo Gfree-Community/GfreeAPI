@@ -43,7 +43,7 @@ describe("/createRecipe endpoint", () => {
         },
       });
 
-    // create Recipe 
+    // create Recipe
     const res = await request(app)
       .post("/createRecipe")
       .set("Authorization", `Bearer ${token}`)

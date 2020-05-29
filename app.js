@@ -25,6 +25,8 @@ process.env.NODE_ENV !== "test" &&
     }
   );
 //..................................
+// Disable Cache
+app.disable("etag");
 
 app.use(morgan("dev"));
 app.use("/images", express.static("images"));
@@ -59,6 +61,8 @@ app.use("/requestPasswordChange", User.requestPasswordChange);
 // Recipe Routes
 app.use("/getNewestRecipesFeed", Recipe.getNewestRecipesFeed);
 app.use("/getPopularRecipesFeed", Recipe.getPopularRecipesFeed);
+app.use("/getRecipesPopularIn", Recipe.getPopularIn);
+app.use("/getRecipesNewestIn", Recipe.getNewestIn);
 app.use("/findRecipe", Recipe.findRecipes);
 app.use("/getRecipe", Recipe.getRecipe);
 

@@ -2,6 +2,8 @@ const AsyncRouter = require("../../../lib/AsyncRoute");
 
 const getNewestRecipesFeed = require("./getNewestRecipesFeed");
 const getPopularRecipesFeed = require("./getPopularRecipesFeed");
+const getPopularIn = require("./getPopularIn");
+const getNewestIn = require("./getNewestIn");
 const findRecipes = require("./findRecipes");
 const deleteRecipe = require("./deleteRecipe");
 const createRecipe = require("./createRecipe");
@@ -14,6 +16,8 @@ const comment = require("./comment");
 module.exports = AsyncRouter({
   getNewestRecipesFeed,
   getPopularRecipesFeed,
+  getPopularIn,
+  getNewestIn,
   getRecipe,
   findRecipes,
   deleteRecipe,

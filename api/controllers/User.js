@@ -14,7 +14,9 @@ const validatePassword = ({ password, hash }) =>
   bcrypt.compareSync(password, hash);
 
 const findUser = ({ email }) => User.findOne({ email }).exec();
-const findUserById = ({ _id }) => User.findById(_id).populate("recipes").exec();
+const findUserById = ({ _id }) =>
+  User.findById(_id)
+    .exec();
 
 const updateUser = (_id, { email, fullname, about, profilePicture, links }) =>
   User.updateOne(
