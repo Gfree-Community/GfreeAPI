@@ -7,6 +7,7 @@ const deleteStory = require("./deleteStory");
 const createStory = require("./creatStory");
 const updateStory = require("./updateStory");
 const likeStory = require("./likeStory");
+const getStory = require("./getStory");
 
 module.exports = AsyncRouter({
     getNewestStoriesFeed,
@@ -16,4 +17,5 @@ module.exports = AsyncRouter({
     createStory,
     updateStory,
     likeStory,
+    getStory
 });

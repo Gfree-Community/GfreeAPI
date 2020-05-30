@@ -74,6 +74,13 @@ const addCreatedRecipe = ({ _id, recipeId }) =>
     }
   );
 
+const addCreatedStory = ({_id, storyId})=>
+    User.updateOne(
+      {_id},
+      {
+        $push: {stories: storyId}
+      }
+    )
 const findUsers = () => User.find().exec();
 
 module.exports = {
@@ -88,4 +95,5 @@ module.exports = {
   addCreatedRecipe,
   likeRecipe,
   updateLikedRecipe,
+  addCreatedStory,
 };

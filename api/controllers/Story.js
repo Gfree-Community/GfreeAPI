@@ -55,11 +55,27 @@ const deleteStory = ({ _id }) =>
                     Story.remove({ _id })
                          .exec();
 
-const likeStory = ({ authorId, story, likes }) =>
-  Story.updateOne(
-    { _id: story._id },
-    { $push: { likedBy: { author: authorId, likes } }, $set: { likes: +likes } }
-  ).exec();
+
+
+const getStory = ({_id})=>
+    Story.findOne({_id}).populate("author").populate("comments.author").exec();
+
+
+const like =({author,storyId, likes, totalLikes})=>
+  Story.updateOne({_id: recipeId}, 
+    {$push: { likedBy: [{author,likes}]}, likes: totalLikes}).exec();
+
+const updateLike = ({ authorId, recipeId,likes, totalLikes})=>
+    Story.findByIdAndUpdate({
+      _id: recipeId,
+    },
+    {
+      $set:{"likedBy.$[elem].likes":+likes},
+      likes: totalLikes
+    },
+    {
+      arrayFilters:[{"elem.author": authorId}],
+    });
 
 module.exports={
     getNewestStoriesFeed,
@@ -69,7 +85,9 @@ module.exports={
     createStory,
     updateStory,
     deleteStory,
-    likeStory
+    getStory,
+    like,
+    updateLike
 };
 
 
