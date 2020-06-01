@@ -45,9 +45,7 @@ const getNewestIn = ({ count, page, time }) =>
     .limit(+count)
     .skip(count * (page - 1))
     .exec()
-    .then((docs) => ({
-      recipe: docs,
-    }));
+    
 
 const getRecipe = ({ _id }) =>
   Recipe.findOne({ _id }).populate("author").populate("comments.author").exec();
