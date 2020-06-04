@@ -2,17 +2,6 @@ const mongoose = require("mongoose");
 
 const Recipe = require("../models/Recipe");
 const ArchivedRecipe = require("../models/ArchivedRecipe");
-
-const getNewestRecipesFeed = ({ count, page }) =>
-  Recipe.find()
-    .sort({ createdAt: -1 })
-    .limit(+count)
-    .skip(count * (page - 1))
-    .exec()
-    .then((docs) => ({
-      recipe: docs,
-    }));
-
 const getPopularRecipesFeed = ({ count, page }) =>
   Recipe.find()
     .sort({ Likes: -1 })
@@ -33,19 +22,13 @@ const getPopularIn = ({ count, page, time }) =>
     .skip(count * (page - 1))
     .exec();
 
-const getNewestIn = ({ count, page, time }) =>
-  Recipe.find({
-    createdAt: {
-      $lte:
-        new Date(new Date() - new Date().getTimezoneOffset()).getTime() - time,
-    },
-  })
+const getNewestRecipesFeed = ({ count, page, time }) =>
+  Recipe.find()
     .populate("author")
     .sort({ createdAt: -1 })
     .limit(+count)
     .skip(count * (page - 1))
-    .exec()
-    
+    .exec();
 
 const getRecipe = ({ _id }) =>
   Recipe.findOne({ _id }).populate("author").populate("comments.author").exec();
@@ -108,7 +91,6 @@ module.exports = {
   getNewestRecipesFeed,
   getPopularRecipesFeed,
   getPopularIn,
-  getNewestIn,
   findRecipes,
   getRecipe,
   createArchivedRecipe,
