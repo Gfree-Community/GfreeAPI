@@ -60,8 +60,10 @@ app.use("/requestPasswordChange", User.requestPasswordChange);
 
 // Recipe Routes
 app.use("/getNewestRecipesFeed", Recipe.getNewestRecipesFeed);
+app.use("/getNewestRecipesByTag", Recipe.getNewestRecipesByTag);
 app.use("/getPopularRecipesFeed", Recipe.getPopularRecipesFeed);
 app.use("/getRecipesPopularIn", Recipe.getPopularIn);
+app.use("/getRecipePopularByTag", Recipe.getPopularInByTag);
 app.use("/findRecipe", Recipe.findRecipes);
 app.use("/getRecipe", Recipe.getRecipe);
 
