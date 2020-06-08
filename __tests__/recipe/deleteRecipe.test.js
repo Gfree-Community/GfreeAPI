@@ -4,8 +4,8 @@ const app = require("../../app");
 const { setupDB } = require("../../test-setup");
 setupDB();
 
-describe("/updateRecipe endpoint", () => {
-  it("Should update Recipe Successfully", async (done) => {
+describe("/deleteRecipe endpoint", () => {
+  it.only("Should deleteRecipe Successfully", async (done) => {
     const newRecipe = {
       title: "Understand the Superpower of Optional Chaining in JavaScript",
       body: {
@@ -21,21 +21,6 @@ describe("/updateRecipe endpoint", () => {
         "The optional chaining will check if an object left to the operator is valid (not null and undefined).",
       tags: ["home", "bro"],
     };
-
-    const updateRecipe = (_id) => ({
-      _id,
-      title: "update recipe",
-      body: {
-        ingredients:
-          "Optional chaining will eliminate the need for manually checking if a property is available in an object . With optional chaining the checking will be done internally.",
-        preparations:
-          "To solve the above problem what we do is , we will add check if name property available in the user object",
-      },
-      thumbnail: "update recipe",
-      cookingTime: "140",
-      description: "update recipe",
-      tags: ["update"],
-    });
 
     const user = {
       email: "jvm@gmail.com",
@@ -59,30 +44,41 @@ describe("/updateRecipe endpoint", () => {
       });
 
     // create Recipe
-    const res2 = await request(app)
+    const res = await request(app)
       .post("/createRecipe")
       .set("Authorization", `Bearer ${token}`)
       .send({
         recipe: newRecipe,
       });
 
-    const recipe = res2.body.recipe;
-
-    const res = await request(app)
-      .post("/updateRecipe")
-      .set("Authorization", `Bearer ${token}`)
-      .send({
-        recipe: updateRecipe(recipe._id),
-      });
-
-    const updatedRecipe = res.body.recipe;
-    const expectedRecipe = updateRecipe(recipe._id);
+    const recipe = res.body.recipe;
 
     expect(res.statusCode).toEqual(201);
-    Object.keys(expectedRecipe).forEach((key) => {
-      expect(updatedRecipe[key]).toEqual(expectedRecipe[key]);
+    Object.keys(newRecipe).forEach((key) => {
+      expect(newRecipe[key]).toEqual(recipe[key]);
     });
 
+    await request(app)
+      .post("/deleteRecipe")
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        recipe: {
+          _id: recipe._id,
+        },
+      });
+
+    // Retreive a recipe
+    const {
+      body: { recipe: deletedRecipe },
+    } = await request(app)
+      .post("/getRecipe")
+      .send({
+        recipe: {
+          _id: recipe._id,
+        },
+      });
+
+    expect(deletedRecipe).toBeNull();
     done();
   });
 });

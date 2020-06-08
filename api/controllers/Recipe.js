@@ -64,9 +64,22 @@ const findRecipes = ({ count, page, query }) =>
     .skip(count * (page - 1))
     .exec();
 
-const createArchivedRecipe = ({ _id, ...recipe }) =>
-  new Recipe({
-    ...recipe,
+const createArchivedRecipe = ({
+  _id,
+  title,
+  description,
+  body,
+  cookingTime,
+  thumbnail,
+  author,
+}) =>
+  new ArchivedRecipe({
+    title,
+    description,
+    body,
+    cookingTime,
+    thumbnail,
+    author,
     _id: new mongoose.Types.ObjectId(),
   }).save();
 

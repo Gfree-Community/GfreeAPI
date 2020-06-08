@@ -76,7 +76,7 @@ app.use("/resetPassword", User.resetPassword);
 //Recipe Routes
 app.use("/createRecipe", Recipe.createRecipe);
 app.use("/updateRecipe", Recipe.updateRecipe);
-app.use("/ArchiveRecipe", Recipe.deleteRecipe);
+app.use("/deleteRecipe", Recipe.deleteRecipe);
 app.use("/likeRecipe", Recipe.likeRecipe);
 app.use("/addComment", Recipe.comment);
 
