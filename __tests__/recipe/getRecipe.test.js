@@ -21,7 +21,7 @@ const newRecipe = {
 };
 
 describe("/getRecipe endpoint", () => {
-  it.only("Should get a recipe Successfully", async (done) => {
+  it("Should get a recipe Successfully", async (done) => {
 
     const user = {
       email: "jvm@gmail.com",

@@ -7,8 +7,13 @@ const updateRecipe = router.post("/", async (req, res, next) => {
   const {
     body: { recipe },
   } = req;
-  const UpdatedRecipe = await Recipe.updateRecipe(recipe);
-  res.status(201).send(UpdatedRecipe);
+  const updatedRecipe = await Recipe.updateRecipe({
+    _id: recipe._id,
+    recipe,
+  });
+  res.status(201).send({
+    recipe: updatedRecipe,
+  });
 });
 
 module.exports = updateRecipe;

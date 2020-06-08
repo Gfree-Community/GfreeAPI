@@ -87,8 +87,24 @@ const createRecipe = ({ recipe }) =>
     ...recipe,
   }).save();
 
-const updateRecipe = ({ _id, ...recipe }) =>
-  Recipe.updateOne({ _id }, { $set: recipe }).exec();
+const updateRecipe = ({
+  _id,
+  recipe: { title, body, thumbnail, cookingTime, description, tags },
+}) =>
+  Recipe.findOneAndUpdate(
+    { _id },
+    {
+      $set: {
+        title,
+        body,
+        thumbnail,
+        cookingTime,
+        description,
+        tags,
+      },
+    },
+    { new: true }
+  ).exec();
 
 const deleteRecipe = ({ _id }) => Recipe.remove({ _id }).exec();
 
