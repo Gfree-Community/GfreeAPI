@@ -22,6 +22,38 @@ const getPopularStoriesFeed = ({count, page})=>
             .then((docs)=>({
                 story : docs
             }));
+ const getpopularIn= ({count, page, time})=>
+ Story.find({
+   createdAt:{
+     $gte:
+    new Date(new Date()- new Date.getTimezoneOffset()).getTime() - time,
+
+   },
+ })           
+ .populate("author")
+ .sort({ Likes: -1 })
+ .limit(+count)
+ .skip(count * (page - 1))
+ .exec();
+
+
+ const getNewestIn= ({count, page, time})=>
+ Story.find({
+   createdAt: {
+     $lte:
+     new Date(new Date()- new Date().getTimezoneOffset()).getTime() - time,
+
+   },
+ })
+ .populate("author")
+ .sort({ Likes: -1 })
+ .limit(+count)
+ .skip(count * (page - 1))
+ .exec()
+ .then((docs)=>({
+   story: docs,
+ }));
+
 
 const findStories = ({count, page, query})=>
             Story.find({ title: query})
@@ -35,6 +67,15 @@ const createArchivedStory = ({ _id, ...story }) =>
                   ...story,
                   _id: new mongoose.Types.ObjectId(),
                     }).save();
+
+
+const addComment = ({storyId, comment:{author, comment} })=>
+Story.updateOne(
+  {_id: storyId},
+  {
+    $push: { comments:[{author, comment: comment}]}
+  }
+).exec();
 
 
 const createStory = ({ story }) =>
@@ -87,7 +128,10 @@ module.exports={
     deleteStory,
     getStory,
     like,
-    updateLike
+    updateLike,
+    getNewestIn,
+    getpopularIn,
+    addComment,
 };
 
 
