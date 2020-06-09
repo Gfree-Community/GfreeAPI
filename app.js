@@ -9,6 +9,7 @@ const passport = require("passport");
 require("./api/config/passport");
 const Debugger = require("./lib/DebugMiddle");
 const Recipe = require("./api/routes/Recipe");
+const Story = require("./api/routes/Story");
 const User = require("./api/routes/User");
 const Aws = require("./api/routes/AWS");
 //..................................
@@ -65,6 +66,13 @@ app.use("/getRecipesPopularIn", Recipe.getPopularIn);
 app.use("/getRecipesNewestIn", Recipe.getNewestIn);
 app.use("/findRecipe", Recipe.findRecipes);
 app.use("/getRecipe", Recipe.getRecipe);
+// Story Routes
+app.use("/getNewestStoriesFeed",Story.getNewestStoriesFeed);
+app.use("/getPoPulatStoriesFeed", Story.getPopularStoriesFeed);
+app.use("/getStoriesPopularIn", Story.getPopularIn);
+app.use("/getStoriesNewestIn", Story.getNewestIn);
+app.use("/findStory", Story.findStory);
+app.use("/getStory", Story.getStory)
 
 // -------Routes that require Authorisation------------
 app.use(User.authenticate);
@@ -79,6 +87,12 @@ app.use("/ArchiveRecipe", Recipe.deleteRecipe);
 app.use("/likeRecipe", Recipe.likeRecipe);
 app.use("/addComment", Recipe.comment);
 
+// Story Routes
+app.use("/createStory", Story.createStory);
+app.use("/updateStory", Story.updateStory);
+app.use("/ArchiveStory", Story.deleteStory);
+app.use("/likeStory", Story.likeStory);
+app.use("/addComment", Story.comment);
 //Aws Routes
 app.use("/getS3Signature", Aws.sendUploadSignature);
 
