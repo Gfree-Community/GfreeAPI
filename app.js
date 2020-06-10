@@ -65,7 +65,7 @@ app.use("/getNewestRecipesByTag", Recipe.getNewestRecipesByTag);
 app.use("/getPopularRecipesFeed", Recipe.getPopularRecipesFeed);
 app.use("/getRecipesPopularIn", Recipe.getPopularIn);
 app.use("/getRecipePopularByTag", Recipe.getPopularInByTag);
-app.use("/findRecipe", Recipe.findRecipes);
+app.use("/findRecipes", Recipe.findRecipes);
 app.use("/getRecipe", Recipe.getRecipe);
 
 // Story Routes
@@ -74,7 +74,7 @@ app.use("/getNewestStoriesByTag", Story.getNewestStoriesByTag);
 app.use("/getPopularStoriesFeed", Story.getPopularStoriesFeed);
 app.use("/getStoriesPopularIn", Story.getPopularIn);
 app.use("/getStoriesPopularByTag", Story.getPopularInByTag);
-app.use("/findStory", Story.findStories);
+app.use("/findStories", Story.findStories);
 app.use("/getStory", Story.getStory);
 
 // -------Routes that require Authorisation------------

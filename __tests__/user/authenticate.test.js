@@ -16,7 +16,7 @@ const nonAuthRoutes = [
   ["post", "/signup"],
   ["get", "/getNewestRecipesFeed"],
   ["post", "/getPopularRecipesFeed"],
-  ["get", "/findRecipe"],
+  ["get", "/findRecipes"],
 ];
 
 describe("Authentification Middleware", () => {

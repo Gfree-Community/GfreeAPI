@@ -8,7 +8,6 @@ const findStories = router.get("/", async (req, res, next) => {
     query: { count = 10, page = 1, query = "" },
   } = req;
   const foundStories = await Story.findStories({ count, page, query });
-  console.log(foundStories, query);
   res.status(200).json({ stories: foundStories });
 });
 

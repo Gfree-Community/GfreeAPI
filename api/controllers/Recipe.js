@@ -59,7 +59,10 @@ const getRecipe = ({ _id }) =>
   Recipe.findOne({ _id }).populate("author").populate("comments.author").exec();
 
 const findRecipes = ({ count, page, query }) =>
-  Recipe.find({ title: query })
+  Recipe.find({ $text: { $search: query } }, { score: { $meta: "textScore" } })
+    .sort({
+      score: { $meta: "textScore" },
+    })
     .limit(+count)
     .skip(count * (page - 1))
     .exec();

@@ -59,7 +59,10 @@ const getStory = ({ _id }) =>
   Story.findOne({ _id }).populate("author").populate("comments.author").exec();
 
 const findStories = ({ count, page, query }) =>
-  Story.find({ title: query })
+  Story.find({ $text: { $search: query } }, { score: { $meta: "textScore" } })
+    .sort({
+      score: { $meta: "textScore" },
+    })
     .limit(+count)
     .skip(count * (page - 1))
     .exec();
