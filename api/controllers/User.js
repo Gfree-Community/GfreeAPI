@@ -14,8 +14,7 @@ const validatePassword = ({ password, hash }) =>
   bcrypt.compareSync(password, hash);
 
 const findUser = ({ email }) => User.findOne({ email }).exec();
-const findUserById = ({ _id }) =>
-  User.findById(_id).populate("recipes").exec();
+const findUserById = ({ _id }) => User.findById(_id).populate("recipes").exec();
 
 const updateUser = (_id, { email, fullname, about, profilePicture, links }) =>
   User.updateOne(
@@ -73,6 +72,33 @@ const addCreatedRecipe = ({ _id, recipeId }) =>
     }
   );
 
+// Story Related
+const updateLikedStory = ({ storyId, _id, likes }) =>
+  User.findByIdAndUpdate(
+    { _id },
+    {
+      $set: { "likedStories.$[elem].likes": +likes },
+    },
+    {
+      arrayFilters: [{ "elem.story": storyId }],
+    }
+  );
+
+const likeStory = ({ story, _id, likes }) =>
+  User.updateOne(
+    { _id },
+    {
+      $push: { likedStories: [{ story, likes }] },
+    }
+  );
+const addCreatedStory = ({ _id, storyId }) =>
+  User.updateOne(
+    { _id },
+    {
+      $push: { stories: storyId },
+    }
+  );
+
 const findUsers = () => User.find().exec();
 
 module.exports = {
@@ -87,4 +113,7 @@ module.exports = {
   addCreatedRecipe,
   likeRecipe,
   updateLikedRecipe,
+  addCreatedStory,
+  likeStory,
+  updateLikedStory,
 };

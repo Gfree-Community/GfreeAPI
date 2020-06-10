@@ -1,14 +1,19 @@
-const express = require ("express");
+const express = require("express");
 const router = express.Router();
-
 
 const Story = require("../../controllers/Story");
 
-const deleteStory = router.post("/", async(req, res, next)=>{
-    const{ body: {_id, ...story}} = req;
-    await Story.createArchivedStory(story);
-    await Story.deleteStory({_id});
-    res.status(201).send({message: "the stoy has been deleted"});
+const deleteStory = router.post("/", async (req, res, next) => {
+  const {
+    body: {
+      story: { _id },
+    },
+  } = req;
+  const story = await Story.getStory({ _id });
+  await Story.createArchivedStory(story);
+  await Story.deleteStory({ _id });
+  res.status(201).send({ message: "Post has been deleted" });
 });
 
-module.exports= deleteStory;
+module.exports = deleteStory;
+

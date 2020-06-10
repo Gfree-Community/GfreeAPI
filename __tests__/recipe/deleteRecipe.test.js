@@ -5,7 +5,7 @@ const { setupDB } = require("../../test-setup");
 setupDB();
 
 describe("/deleteRecipe endpoint", () => {
-  it.only("Should deleteRecipe Successfully", async (done) => {
+  it("Should deleteRecipe Successfully", async (done) => {
     const newRecipe = {
       title: "Understand the Superpower of Optional Chaining in JavaScript",
       body: {

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const timestamps = require("../../lib/mongooseTimestamp");
 const { Schema } = mongoose;
 
-const StorySchema = mongoose.Schema(
+const ArchivedStorySchema = mongoose.Schema(
   {
     _id: mongoose.Schema.Types.ObjectId,
     title: { type: String, required: false },
@@ -36,4 +36,4 @@ const StorySchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Story", StorySchema);
+module.exports = mongoose.model("Story", ArchivedStorySchema);

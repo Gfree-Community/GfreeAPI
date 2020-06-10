@@ -19,8 +19,8 @@ const newRecipe = {
   tags: ["home", "bro"],
 };
 
-describe("/likeRecipe endpoint", () => {
-  it("Should like a recipe Successfully", async (done) => {
+describe("/findRecipe endpoint", () => {
+  it.only("Should get a recipe Successfully", async (done) => {
     const user = {
       email: "jvm@gmail.com",
       password: "allo1234",
@@ -54,63 +54,23 @@ describe("/likeRecipe endpoint", () => {
         recipe: newRecipe,
       });
 
-    // Like Recipe
+    // Retrive a recipe
     const res = await request(app)
-      .post("/likeRecipe")
-      .set("Authorization", `Bearer ${token}`)
+      .post("/findRecipe")
       .send({
-        recipe: {
-          _id: recipeId,
-        },
-        likes: 5,
-      });
-
-    // Retrive a recipe
-    const {
-      body: { recipe },
-    } = await request(app)
-      .post("/getRecipe")
-      .send({
-        recipe: {
-          _id: recipeId,
+        query: {
+          query: "javascript",
         },
       });
 
-    expect(res.statusCode).toEqual(201);
-    expect(recipe.likes).toEqual(5);
-    expect(recipe.likedBy[0].likes).toEqual(5);
+    const recipes = res.body.recipes;
 
-    // Like Recipe
-    const resUpdated = await request(app)
-      .post("/likeRecipe")
-      .set("Authorization", `Bearer ${token}`)
-      .send({
-        recipe: {
-          _id: recipeId,
-        },
-        likes: 10,
-      });
+    console.log(recipes, 'sss', res.body);
+    expect(res.statusCode).toEqual(200);
+    Object.keys(newRecipe).forEach((key) => {
+      expect(newRecipe[key]).toEqual(recipes[0][key]);
+    });
 
-    // Retrive a recipe
-    const {
-      body: { recipe: updatedRecipe },
-    } = await request(app)
-      .post("/getRecipe")
-      .send({
-        recipe: {
-          _id: recipeId,
-        },
-      });
-
-    const {
-      body: { user: updatedUser },
-    } = await request(app)
-      .get("/getUser")
-      .set("Authorization", `Bearer ${token}`);
-
-    expect(updatedRecipe.likes).toEqual(10);
-    expect(updatedRecipe.likedBy[0].likes).toEqual(10);
-    expect(updatedUser.likedRecipes[0].likes).toEqual(10);
     done();
   });
 });

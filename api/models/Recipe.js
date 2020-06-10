@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const timestamps = require("../../lib/mongooseTimestamp");
 const { Schema } = mongoose;
+
 const RecipeSchema = mongoose.Schema(
   {
     _id: mongoose.Schema.Types.ObjectId,
@@ -29,7 +30,6 @@ const RecipeSchema = mongoose.Schema(
     thumbnail: { type: String, required: true },
     cookingTime: { type: String, required: true },
     description: { type: String, required: true },
-    hmida: { type: String, default: "broo" },
     tags: [{ type: String, required: true }],
     createdAt: { type: Number },
     updatedAt: { type: Number },
