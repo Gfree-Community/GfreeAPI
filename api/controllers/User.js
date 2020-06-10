@@ -14,7 +14,7 @@ const validatePassword = ({ password, hash }) =>
   bcrypt.compareSync(password, hash);
 
 const findUser = ({ email }) => User.findOne({ email }).exec();
-const findUserById = ({_id})=> User.findById(_id).exec();
+const findUserById = ({ _id }) => User.findById(_id).populate("recipes").exec();
 
 const updateUser = (_id, { email, fullname, about, profilePicture, links }) =>
   User.updateOne(
@@ -44,6 +44,61 @@ const createUser = ({ email, password, fullname }) =>
     fullname,
   }).save();
 
+// Recipe Related
+const updateLikedRecipe = ({ recipeId, _id, likes }) =>
+  User.findByIdAndUpdate(
+    { _id },
+    {
+      $set: { "likedRecipes.$[elem].likes": +likes },
+    },
+    {
+      arrayFilters: [{ "elem.recipe": recipeId }],
+    }
+  );
+
+const likeRecipe = ({ recipe, _id, likes }) =>
+  User.updateOne(
+    { _id },
+    {
+      $push: { likedRecipes: [{ recipe, likes }] },
+    }
+  );
+
+const addCreatedRecipe = ({ _id, recipeId }) =>
+  User.updateOne(
+    { _id },
+    {
+      $push: { recipes: recipeId },
+    }
+  );
+
+// Story Related
+const updateLikedStory = ({ storyId, _id, likes }) =>
+  User.findByIdAndUpdate(
+    { _id },
+    {
+      $set: { "likedStories.$[elem].likes": +likes },
+    },
+    {
+      arrayFilters: [{ "elem.story": storyId }],
+    }
+  );
+
+const likeStory = ({ story, _id, likes }) =>
+  User.updateOne(
+    { _id },
+    {
+      $push: { likedStories: [{ story, likes }] },
+    }
+  );
+const addCreatedStory = ({ _id, storyId }) =>
+  User.updateOne(
+    { _id },
+    {
+      $push: { stories: storyId },
+    }
+  );
+
 const findUsers = () => User.find().exec();
 
 module.exports = {
@@ -54,5 +109,11 @@ module.exports = {
   updateUser,
   findUsers,
   changePassword,
-  findUserById
+  findUserById,
+  addCreatedRecipe,
+  likeRecipe,
+  updateLikedRecipe,
+  addCreatedStory,
+  likeStory,
+  updateLikedStory,
 };

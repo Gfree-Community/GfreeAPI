@@ -8,7 +8,8 @@ const findRecipes = router.get("/", async (req, res, next) => {
     query: { count = 10, page = 1, query = "" },
   } = req;
   const foundRecipes = await Recipe.findRecipes({ count, page, query });
-  res.status(200).json(foundRecipes);
+  console.log(foundRecipes, query);
+  res.status(200).json({ recipes: foundRecipes });
 });
 
 module.exports = findRecipes;
