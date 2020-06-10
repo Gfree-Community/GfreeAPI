@@ -27,7 +27,7 @@ const getNewestStoriesFeed = ({ count, page }) =>
   Story.find()
     .populate("author")
     .sort({ createdAt: -1 })
-    .lomit(+count)
+    .limit(+count)
     .skip(count * (page - 1))
     .exec();
 

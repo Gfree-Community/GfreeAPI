@@ -36,4 +36,4 @@ const ArchivedStorySchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Story", ArchivedStorySchema);
+module.exports = mongoose.model("ArchivedStory", ArchivedStorySchema);

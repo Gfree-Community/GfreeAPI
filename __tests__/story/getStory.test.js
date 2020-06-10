@@ -4,23 +4,20 @@ const app = require("../../app");
 const { setupDB } = require("../../test-setup");
 setupDB();
 
-const newRecipe = {
+const newStory = {
   title: "Understand the Superpower of Optional Chaining in JavaScript",
-  body: {
-    ingredients:
+  body: 
       "Optional chaining will eliminate the need for manually checking if a property is available in an object . With optional chaining the checking will be done internally.",
-    preparations:
-      "To solve the above problem what we do is , we will add check if name property available in the user object",
-  },
+ 
   thumbnail: "https://miro.medium.com/max/1400/1*jbC9WZGu0PU2POMmGr9rWg.jpeg",
-  cookingTime: "120",
+  readtime: "120",
   description:
     "The optional chaining will check if an object left to the operator is valid (not null and undefined).",
   tags: ["home", "bro"],
 };
 
-describe("/findRecipe endpoint", () => {
-  it("Should get a recipe Successfully", async (done) => {
+describe("/getStory endpoint", () => {
+  it.only("Should get a story Successfully", async (done) => {
     const user = {
       email: "jvm@gmail.com",
       password: "allo1234",
@@ -42,33 +39,32 @@ describe("/findRecipe endpoint", () => {
         },
       });
 
-    // Create a recipe
+    // Create a story
     const {
       body: {
-        recipe: { _id: recipeId },
+        story: { _id: storyId },
       },
     } = await request(app)
-      .post("/createRecipe")
+      .post("/createStory")
       .set("Authorization", `Bearer ${token}`)
       .send({
-        recipe: newRecipe,
+        story: newStory,
       });
 
-    // Retrive a recipe
+    // Retrive a Story
     const res = await request(app)
-      .post("/findRecipe")
+      .post("/getStory")
       .send({
-        query: {
-          query: "javascript",
+        story: {
+          _id: storyId,
         },
       });
 
-    const recipes = res.body.recipes;
+    const story = res.body.story;
 
-    console.log(recipes, 'sss', res.body);
     expect(res.statusCode).toEqual(200);
-    Object.keys(newRecipe).forEach((key) => {
-      expect(newRecipe[key]).toEqual(recipes[0][key]);
+    Object.keys(newStory).forEach((key) => {
+      expect(newStory[key]).toEqual(story[key]);
     });
 
     done();
