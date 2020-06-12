@@ -12,7 +12,6 @@ const signin = router.use(async (req, res, next) => {
         next(err);
       }
       if (info !== undefined) {
-        console.log(info);
         res.status(422).json(info);
       } else {
         // pass the user object to following middleware
