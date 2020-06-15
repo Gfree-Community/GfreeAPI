@@ -37,7 +37,21 @@ const getPopularInByTag = ({ count, page, time, tag }) =>
       $gte:
         new Date(new Date() - new Date().getTimezoneOffset()).getTime() - time,
     },
-    tags: tag,
+    tags: {
+      $in: [tag],
+    },
+  })
+    .populate("author")
+    .sort({ Likes: -1 })
+    .limit(+count)
+    .skip(count * (page - 1))
+    .exec();
+
+const getAnyStoriesOfTag = ({ count, page }) =>
+  Story.find({
+    tags: {
+      $in: tags,
+    },
   })
     .populate("author")
     .sort({ Likes: -1 })
@@ -47,7 +61,9 @@ const getPopularInByTag = ({ count, page, time, tag }) =>
 
 const getNewestStoriesByTag = ({ count, page, tag }) =>
   Story.find({
-    tags: tag,
+    tags: {
+      $in: [tag],
+    },
   })
     .populate("author")
     .sort({ createdAt: -1 })
@@ -149,6 +165,7 @@ module.exports = {
   getPopularStoriesFeed,
   getNewestStoriesByTag,
   getPopularInByTag,
+  getAnyStoriesOfTag,
   getPopularIn,
   findStories,
   getStory,

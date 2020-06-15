@@ -11,6 +11,7 @@ const Debugger = require("./lib/DebugMiddle");
 const Recipe = require("./api/routes/Recipe");
 const Story = require("./api/routes/Story");
 const User = require("./api/routes/User");
+const Feed = require("./api/routes/Feed");
 const Aws = require("./api/routes/AWS");
 //..................................
 const pwddb = "qwert12345A";
@@ -53,6 +54,10 @@ app.use((req, res, next) => {
 });
 
 // ------------- Routes --------------
+
+// Feed Routes
+app.use("/getHomeFeed", Feed.getHomeFeed);
+
 // User Routes
 app.use("/signin", User.signin);
 app.use("/signup", User.signup);
@@ -67,6 +72,7 @@ app.use("/getRecipesPopularIn", Recipe.getPopularIn);
 app.use("/getRecipePopularByTag", Recipe.getPopularInByTag);
 app.use("/findRecipes", Recipe.findRecipes);
 app.use("/getRecipe", Recipe.getRecipe);
+app.use("/getRecommandedRecipes", Recipe.getRecommandedRecipes);
 
 // Story Routes
 app.use("/getNewestStoriesFeed", Story.getNewestStoriesFeed);
@@ -76,6 +82,7 @@ app.use("/getStoriesPopularIn", Story.getPopularIn);
 app.use("/getStoriesPopularByTag", Story.getPopularInByTag);
 app.use("/findStories", Story.findStories);
 app.use("/getStory", Story.getStory);
+app.use("/getRecommandedStories", Story.getRecommandedStories);
 
 // -------Routes that require Authorisation------------
 app.use(User.authenticate);

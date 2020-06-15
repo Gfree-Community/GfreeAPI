@@ -12,6 +12,7 @@ const getStory = require("./getStory");
 const comment = require("./comment");
 const getPopularInByTag = require("./getPopularInByTag");
 const getNewestStoriesByTag = require("./getNewestStoriesByTag");
+const getRecommandedStories = require("./getRecommandedStories");
 
 // Helper function to Apply AsyncRoute to all Routers in the current Dir
 module.exports = AsyncRouter({
@@ -19,6 +20,7 @@ module.exports = AsyncRouter({
   getNewestStoriesFeed,
   getNewestStoriesByTag,
   getPopularInByTag,
+  getRecommandedStories,
   getPopularIn,
   getStory,
   findStories,
