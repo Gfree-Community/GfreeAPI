@@ -12,8 +12,8 @@ const getRecommandedRecipes = router.post("/", async (req, res, next) => {
     page: 1,
     tags,
   });
-  if (recipes) {
-    res.status(200).json({ recipes });
+  if (recipes.length > 4) {
+    res.status(200).json({ recipes: recipes.slice(1) });
     return;
   }
 

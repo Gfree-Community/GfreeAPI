@@ -3,7 +3,7 @@ const router = express.Router();
 
 const Story = require("../../controllers/Story");
 
-const getRecommandedStories= router.post("/", async (req, res, next) => {
+const getRecommandedStories = router.post("/", async (req, res, next) => {
   const {
     story: { tags },
   } = req.body;
@@ -12,8 +12,9 @@ const getRecommandedStories= router.post("/", async (req, res, next) => {
     page: 1,
     tags,
   });
-  if (stories) {
-    res.status(200).json({ stories });
+
+  if (stories.length > 4) {
+    res.status(200).json({ stories: stories.slice(1) });
     return;
   }
 
@@ -26,4 +27,3 @@ const getRecommandedStories= router.post("/", async (req, res, next) => {
 });
 
 module.exports = getRecommandedStories;
-

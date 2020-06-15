@@ -47,7 +47,7 @@ const getPopularInByTag = ({ count, page, time, tag }) =>
     .skip(count * (page - 1))
     .exec();
 
-const getAnyStoriesOfTag = ({ count, page }) =>
+const getAnyStoriesOfTag = ({ count, page, tags }) =>
   Story.find({
     tags: {
       $in: tags,
