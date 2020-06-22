@@ -10,6 +10,10 @@ const SELECT_FIELDS_FOR_STORY_CARD = {
   createdAt: 1,
   thumbnail: 1,
 };
+
+const getAllStoriesTitle = () =>
+  Story.find({}, { title: 1, updatedAt: 1 }).exec();
+
 const getPopularStoriesFeed = ({ count, page }) =>
   Story.find({}, SELECT_FIELDS_FOR_STORY_CARD)
     .sort({ Likes: -1 })
@@ -185,6 +189,7 @@ const updateLike = ({ authorId, storyId, likes, totalLikes }) =>
   );
 
 module.exports = {
+  getAllStoriesTitle,
   getNewestStoriesFeed,
   getPopularStoriesFeed,
   getNewestStoriesByTag,

@@ -11,6 +11,9 @@ const SELECT_FIELDS_FOR_RECIPE_CARD = {
   thumbnail: 1,
 };
 
+const getAllRecipesTitle = () =>
+  Recipe.find({}, { title: 1, updatedAt: 1 }).exec();
+
 const getPopularRecipesFeed = ({ count, page }) =>
   Recipe.find({}, SELECT_FIELDS_FOR_RECIPE_CARD)
     .sort({ Likes: -1 })
@@ -186,6 +189,7 @@ const updateLike = ({ authorId, recipeId, likes, totalLikes }) =>
   );
 
 module.exports = {
+  getAllRecipesTitle,
   getNewestRecipesFeed,
   getPopularRecipesFeed,
   getNewestRecipesByTag,

@@ -13,9 +13,11 @@ const comment = require("./comment");
 const getPopularInByTag = require("./getPopularInByTag");
 const getNewestRecipesByTag = require("./getNewestRecipesByTag");
 const getRecommandedRecipes = require("./getRecommandedRecipes");
+const getAllRecipesTitle = require("./getAllRecipesTitle");
 
 // Helper function to Apply AsyncRoute to all Routers in the current Dir
 module.exports = AsyncRouter({
+  getAllRecipesTitle,
   getPopularRecipesFeed,
   getNewestRecipesFeed,
   getNewestRecipesByTag,
