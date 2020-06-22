@@ -56,7 +56,7 @@ describe("/findStories endpoint", () => {
     const stories = res.body.stories;
 
     expect(res.statusCode).toEqual(200);
-    Object.keys(newStory).forEach((key) => {
+    ["title", "thumbnail", "description"].forEach((key) => {
       expect(newStory[key]).toEqual(stories[0][key]);
     });
 

@@ -3,20 +3,31 @@ const mongoose = require("mongoose");
 const Story = require("../models/Story");
 const ArchivedStory = require("../models/ArchivedStory");
 
+const SELECT_FIELDS_FOR_STORY_CARD = {
+  title: 1,
+  author: 1,
+  description: 1,
+  createdAt: 1,
+  thumbnail: 1,
+};
 const getPopularStoriesFeed = ({ count, page }) =>
-  Story.find()
+  Story.find({}, SELECT_FIELDS_FOR_STORY_CARD)
     .sort({ Likes: -1 })
     .limit(+count)
     .skip(count * (page - 1))
     .exec();
 
 const getPopularIn = ({ count, page, time }) =>
-  Story.find({
-    createdAt: {
-      $gte:
-        new Date(new Date() - new Date().getTimezoneOffset()).getTime() - time,
+  Story.find(
+    {
+      createdAt: {
+        $gte:
+          new Date(new Date() - new Date().getTimezoneOffset()).getTime() -
+          time,
+      },
     },
-  })
+    SELECT_FIELDS_FOR_STORY_CARD
+  )
     .populate("author")
     .sort({ Likes: -1 })
     .limit(+count)
@@ -24,7 +35,7 @@ const getPopularIn = ({ count, page, time }) =>
     .exec();
 
 const getNewestStoriesFeed = ({ count, page }) =>
-  Story.find()
+  Story.find({}, SELECT_FIELDS_FOR_STORY_CARD)
     .populate("author")
     .sort({ createdAt: -1 })
     .limit(+count)
@@ -32,15 +43,19 @@ const getNewestStoriesFeed = ({ count, page }) =>
     .exec();
 
 const getPopularInByTag = ({ count, page, time, tag }) =>
-  Story.find({
-    createdAt: {
-      $gte:
-        new Date(new Date() - new Date().getTimezoneOffset()).getTime() - time,
+  Story.find(
+    {
+      createdAt: {
+        $gte:
+          new Date(new Date() - new Date().getTimezoneOffset()).getTime() -
+          time,
+      },
+      tags: {
+        $in: [tag],
+      },
     },
-    tags: {
-      $in: [tag],
-    },
-  })
+    SELECT_FIELDS_FOR_STORY_CARD
+  )
     .populate("author")
     .sort({ Likes: -1 })
     .limit(+count)
@@ -48,11 +63,14 @@ const getPopularInByTag = ({ count, page, time, tag }) =>
     .exec();
 
 const getAnyStoriesOfTag = ({ count, page, tags }) =>
-  Story.find({
-    tags: {
-      $in: tags,
+  Story.find(
+    {
+      tags: {
+        $in: tags,
+      },
     },
-  })
+    SELECT_FIELDS_FOR_STORY_CARD
+  )
     .populate("author")
     .sort({ Likes: -1 })
     .limit(+count)
@@ -60,11 +78,14 @@ const getAnyStoriesOfTag = ({ count, page, tags }) =>
     .exec();
 
 const getNewestStoriesByTag = ({ count, page, tag }) =>
-  Story.find({
-    tags: {
-      $in: [tag],
+  Story.find(
+    {
+      tags: {
+        $in: [tag],
+      },
     },
-  })
+    SELECT_FIELDS_FOR_STORY_CARD
+  )
     .populate("author")
     .sort({ createdAt: -1 })
     .limit(+count)
@@ -75,7 +96,10 @@ const getStory = ({ _id }) =>
   Story.findOne({ _id }).populate("author").populate("comments.author").exec();
 
 const findStories = ({ count, page, query }) =>
-  Story.find({ $text: { $search: query } }, { score: { $meta: "textScore" } })
+  Story.find(
+    { $text: { $search: query } },
+    { score: { $meta: "textScore" }, ...SELECT_FIELDS_FOR_STORY_CARD }
+  )
     .sort({
       score: { $meta: "textScore" },
     })
