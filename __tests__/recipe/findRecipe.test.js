@@ -56,11 +56,12 @@ describe("/findRecipe endpoint", () => {
 
     // Retrive a recipe
     const res = await request(app).get("/findRecipes?query=javascript");
-    
+
     const recipes = res.body.recipes;
 
     expect(res.statusCode).toEqual(200);
-    Object.keys(newRecipe).forEach((key) => {
+
+    ["title", "thumbnail", "cookingTime"].forEach((key) => {
       expect(newRecipe[key]).toEqual(recipes[0][key]);
     });
 

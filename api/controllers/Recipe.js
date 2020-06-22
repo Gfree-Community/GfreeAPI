@@ -3,20 +3,32 @@ const mongoose = require("mongoose");
 const Recipe = require("../models/Recipe");
 const ArchivedRecipe = require("../models/ArchivedRecipe");
 
+const SELECT_FIELDS_FOR_RECIPE_CARD = {
+  title: 1,
+  author: 1,
+  cookingTime: 1,
+  createdAt: 1,
+  thumbnail: 1,
+};
+
 const getPopularRecipesFeed = ({ count, page }) =>
-  Recipe.find()
+  Recipe.find({}, SELECT_FIELDS_FOR_RECIPE_CARD)
     .sort({ Likes: -1 })
     .limit(+count)
     .skip(count * (page - 1))
     .exec();
 
 const getPopularIn = ({ count, page, time }) =>
-  Recipe.find({
-    createdAt: {
-      $gte:
-        new Date(new Date() - new Date().getTimezoneOffset()).getTime() - time,
+  Recipe.find(
+    {
+      createdAt: {
+        $gte:
+          new Date(new Date() - new Date().getTimezoneOffset()).getTime() -
+          time,
+      },
     },
-  })
+    SELECT_FIELDS_FOR_RECIPE_CARD
+  )
     .populate("author")
     .sort({ Likes: -1 })
     .limit(+count)
@@ -24,7 +36,7 @@ const getPopularIn = ({ count, page, time }) =>
     .exec();
 
 const getNewestRecipesFeed = ({ count, page }) =>
-  Recipe.find()
+  Recipe.find({}, SELECT_FIELDS_FOR_RECIPE_CARD)
     .populate("author")
     .sort({ createdAt: -1 })
     .limit(+count)
@@ -32,15 +44,19 @@ const getNewestRecipesFeed = ({ count, page }) =>
     .exec();
 
 const getPopularInByTag = ({ count, page, time, tag }) =>
-  Recipe.find({
-    createdAt: {
-      $gte:
-        new Date(new Date() - new Date().getTimezoneOffset()).getTime() - time,
+  Recipe.find(
+    {
+      createdAt: {
+        $gte:
+          new Date(new Date() - new Date().getTimezoneOffset()).getTime() -
+          time,
+      },
+      tags: {
+        $in: [tag],
+      },
     },
-    tags: {
-      $in: [tag],
-    },
-  })
+    SELECT_FIELDS_FOR_RECIPE_CARD
+  )
     .populate("author")
     .sort({ Likes: -1 })
     .limit(+count)
@@ -48,11 +64,14 @@ const getPopularInByTag = ({ count, page, time, tag }) =>
     .exec();
 
 const getNewestRecipesByTag = ({ count, page, tag }) =>
-  Recipe.find({
-    tags: {
-      $in: [tag],
+  Recipe.find(
+    {
+      tags: {
+        $in: [tag],
+      },
     },
-  })
+    SELECT_FIELDS_FOR_RECIPE_CARD
+  )
     .populate("author")
     .sort({ createdAt: -1 })
     .limit(+count)
@@ -60,11 +79,14 @@ const getNewestRecipesByTag = ({ count, page, tag }) =>
     .exec();
 
 const getAnyRecipesOfTag = ({ count, page, tags }) =>
-  Recipe.find({
-    tags: {
-      $in: tags,
+  Recipe.find(
+    {
+      tags: {
+        $in: tags,
+      },
     },
-  })
+    SELECT_FIELDS_FOR_RECIPE_CARD
+  )
     .populate("author")
     .sort({ Likes: -1 })
     .limit(+count)
@@ -75,7 +97,10 @@ const getRecipe = ({ _id }) =>
   Recipe.findOne({ _id }).populate("author").populate("comments.author").exec();
 
 const findRecipes = ({ count, page, query }) =>
-  Recipe.find({ $text: { $search: query } }, { score: { $meta: "textScore" } })
+  Recipe.find(
+    { $text: { $search: query } },
+    { score: { $meta: "textScore" }, ...SELECT_FIELDS_FOR_RECIPE_CARD }
+  )
     .sort({
       score: { $meta: "textScore" },
     })
