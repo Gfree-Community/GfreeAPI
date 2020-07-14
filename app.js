@@ -14,12 +14,12 @@ const User = require("./api/routes/User");
 const Feed = require("./api/routes/Feed");
 const Aws = require("./api/routes/AWS");
 //..................................
-const pwddb = "qwert12345A";
+const pwddb = "qmd8otXwx2b3KdAZ";
 process.env.NODE_ENV !== "test" &&
   mongoose.connect(
     "mongodb+srv://jlo:" +
       pwddb +
-      "@gfree-5rmfi.mongodb.net/test?retryWrites=true&w=majority",
+      "@gfreedb.jfg6j.mongodb.net/<dbname>?retryWrites=true&w=majority",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
