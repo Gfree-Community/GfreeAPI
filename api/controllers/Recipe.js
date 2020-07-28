@@ -108,6 +108,7 @@ const findRecipes = ({ count, page, query }) =>
       score: { $meta: "textScore" },
     })
     .limit(+count)
+    .populate("author")
     .skip(count * (page - 1))
     .exec();
 
