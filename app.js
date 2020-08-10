@@ -10,6 +10,7 @@ require("./api/config/passport");
 const Debugger = require("./lib/DebugMiddle");
 const Recipe = require("./api/routes/Recipe");
 const Story = require("./api/routes/Story");
+const Discussion = require("./api/routes/Discussion");
 const User = require("./api/routes/User");
 const Feed = require("./api/routes/Feed");
 const Aws = require("./api/routes/AWS");
@@ -86,6 +87,17 @@ app.use("/getStory", Story.getStory);
 app.use("/getRecommandedStories", Story.getRecommandedStories);
 app.use("/getAllStoriesTitle", Story.getAllStoriesTitle);
 
+// Discussion Routes
+app.use("/getNewestDiscussionsFeed", Discussion.getNewestDiscussionsFeed);
+app.use("/getNewestDiscussionsByTag", Discussion.getNewestDiscussionsByTag);
+app.use("/getPopularDiscussionsFeed", Discussion.getPopularDiscussionsFeed);
+app.use("/getDiscussionsPopularIn", Discussion.getPopularIn);
+app.use("/getDiscussionsPopularByTag", Discussion.getPopularInByTag);
+app.use("/findDiscussions", Discussion.findDiscussions);
+app.use("/getDiscussion", Discussion.getDiscussion);
+app.use("/getRecommandedDiscussions", Discussion.getRecommandedDiscussions);
+app.use("/getAllDiscussionsTitle", Discussion.getAllDiscussionsTitle);
+
 // -------Routes that require Authorisation------------
 app.use(User.authenticate);
 app.use("/getUser", User.getUser);
@@ -105,6 +117,13 @@ app.use("/updateStory", Story.updateStory);
 app.use("/deleteStory", Story.deleteStory);
 app.use("/likeStory", Story.likeStory);
 app.use("/addCommentToStory", Story.comment);
+
+//Disucssion Routes
+app.use("/createDisucssion", Disucssion.createDisucssion);
+app.use("/updateDisucssion", Disucssion.updateDisucssion);
+app.use("/deleteDisucssion", Disucssion.deleteDisucssion);
+app.use("/likeDisucssion", Disucssion.likeDisucssion);
+app.use("/addCommentToDisucssion", Disucssion.comment);
 
 //Aws Routes
 app.use("/getS3Signature", Aws.sendUploadSignature);
