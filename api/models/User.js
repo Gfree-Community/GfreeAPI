@@ -17,6 +17,7 @@ const UserSchema = mongoose.Schema(
     profilePicture: { type: String, required: false },
     stories: [{ type: Schema.Types.ObjectId, ref: "Story" }],
     recipes: [{ type: Schema.Types.ObjectId, ref: "Recipe" }],
+    discussions: [{ type: Schema.Types.ObjectId, ref: "Discussion" }],
     links: {
       website: { type: String },
       instagram: { type: String },
@@ -26,6 +27,12 @@ const UserSchema = mongoose.Schema(
     likedStories: [
       {
         story: { type: Schema.Types.ObjectId, ref: "Story" },
+        likes: { type: Number, default: 0 },
+      },
+    ],
+    likedDiscussions: [
+      {
+        discussion: { type: Schema.Types.ObjectId, ref: "Story" },
         likes: { type: Number, default: 0 },
       },
     ],
