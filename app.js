@@ -118,12 +118,12 @@ app.use("/deleteStory", Story.deleteStory);
 app.use("/likeStory", Story.likeStory);
 app.use("/addCommentToStory", Story.comment);
 
-//Disucssion Routes
-app.use("/createDisucssion", Disucssion.createDisucssion);
-app.use("/updateDisucssion", Disucssion.updateDisucssion);
-app.use("/deleteDisucssion", Disucssion.deleteDisucssion);
-app.use("/likeDisucssion", Disucssion.likeDisucssion);
-app.use("/addCommentToDisucssion", Disucssion.comment);
+//Discussion Routes
+app.use("/createDiscussion", Discussion.createDiscussion);
+app.use("/updateDiscussion", Discussion.updateDiscussion);
+app.use("/deleteDiscussion", Discussion.deleteDiscussion);
+app.use("/likeDiscussion", Discussion.likeDiscussion);
+app.use("/addCommentToDiscussion", Discussion.comment);
 
 //Aws Routes
 app.use("/getS3Signature", Aws.sendUploadSignature);

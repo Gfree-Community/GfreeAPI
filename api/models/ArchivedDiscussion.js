@@ -24,7 +24,6 @@ const ArchivedDiscussionSchema = mongoose.Schema(
         comment: { type: String, required: false },
       },
     ],
-    thumbnail: { type: String, required: true },
     tags: [{ type: String, required: true }],
     createdAt: { type: Number },
     updatedAt: { type: Number },

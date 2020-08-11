@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Discussion = require("../models/Discussion");
 const ArchivedDiscussion = require("../models/ArchivedDiscussion");
 
-const SELECT_FIELDS_FOR_Discussion_CARD = {
+const SELECT_FIELDS_FOR_DISCUSSION_CARD = {
   title: 1,
   author: 1,
   Body: 1,
@@ -102,7 +102,7 @@ const getDiscussion = ({ _id }) =>
     .populate("comments.author")
     .exec();
 
-const findStories = ({ count, page, query }) =>
+const findDiscussions = ({ count, page, query }) =>
   Discussion.find(
     { $text: { $search: query } },
     { score: { $meta: "textScore" }, ...SELECT_FIELDS_FOR_DISCUSSION_CARD }
@@ -186,7 +186,7 @@ module.exports = {
   getPopularDiscussionsFeed,
   getNewestDiscussionsByTag,
   getPopularInByTag,
-  getAnyDiscussionOfTag,
+  getAnyDiscussionsOfTag,
   getPopularIn,
   findDiscussions,
   getDiscussion,
