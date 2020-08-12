@@ -45,6 +45,8 @@ const createUser = ({ email, password, fullname }) =>
     fullname,
   }).save();
 
+const findUsers = () => User.find().exec();
+
 // Recipe Related
 const updateLikedRecipe = ({ recipeId, _id, likes }) =>
   User.findByIdAndUpdate(
@@ -100,7 +102,32 @@ const addCreatedStory = ({ _id, storyId }) =>
     }
   );
 
-const findUsers = () => User.find().exec();
+// Discussion Related
+const updateLikedDiscussion = ({ discussionId, _id, likes }) =>
+  User.findByIdAndUpdate(
+    { _id },
+    {
+      $set: { "likedDiscussions.$[elem].likes": +likes },
+    },
+    {
+      arrayFilters: [{ "elem.discussion": discussionId }],
+    }
+  );
+
+const likeDiscussion = ({ discussion, _id, likes }) =>
+  User.updateOne(
+    { _id },
+    {
+      $push: { likedDiscussions: [{ discussion, likes }] },
+    }
+  );
+const addCreatedDiscussion = ({ _id, discussionId }) =>
+  User.updateOne(
+    { _id },
+    {
+      $push: { discussions: discussionId },
+    }
+  );
 
 module.exports = {
   setPassword,
@@ -117,4 +144,7 @@ module.exports = {
   addCreatedStory,
   likeStory,
   updateLikedStory,
+  addCreatedDiscussion,
+  likeDiscussion,
+  updateLikedDiscussion,
 };
