@@ -74,6 +74,7 @@ app.use("/findRecipes", Recipe.findRecipes);
 app.use("/getRecipe", Recipe.getRecipe);
 app.use("/getRecommandedRecipes", Recipe.getRecommandedRecipes);
 app.use("/getAllRecipesTitle", Recipe.getAllRecipesTitle);
+app.use("/commentDelete", Recipe.commentDelete);
 
 // Story Routes
 app.use("/getNewestStoriesFeed", Story.getNewestStoriesFeed);

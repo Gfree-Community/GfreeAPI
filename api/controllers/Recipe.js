@@ -169,6 +169,12 @@ const updateRecipe = ({
 
 const deleteRecipe = ({ _id }) => Recipe.remove({ _id }).exec();
 
+const deleteComment = ({_id,delcomment})=> 
+Recipe.update(
+  { _id: _id },
+  {$unset:{comments:[{_id:delcomment}]}}
+  ).exec();
+
 const like = ({ author, recipeId, likes, totalLikes }) =>
   Recipe.updateOne(
     { _id: recipeId },
@@ -206,4 +212,5 @@ module.exports = {
   like,
   updateLike,
   addComment,
+  deleteComment,
 };

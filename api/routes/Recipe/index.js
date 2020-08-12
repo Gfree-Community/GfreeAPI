@@ -14,6 +14,7 @@ const getPopularInByTag = require("./getPopularInByTag");
 const getNewestRecipesByTag = require("./getNewestRecipesByTag");
 const getRecommandedRecipes = require("./getRecommandedRecipes");
 const getAllRecipesTitle = require("./getAllRecipesTitle");
+const commentDelete = require("./commentDelete")
 
 // Helper function to Apply AsyncRoute to all Routers in the current Dir
 module.exports = AsyncRouter({
@@ -31,4 +32,5 @@ module.exports = AsyncRouter({
   updateRecipe,
   likeRecipe,
   comment,
+  commentDelete
 });
