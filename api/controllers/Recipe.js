@@ -131,14 +131,6 @@ const createArchivedRecipe = ({
     _id: new mongoose.Types.ObjectId(),
   }).save();
 
-const addComment = ({ recipeId, comment: { author, comment } }) =>
-  Recipe.updateOne(
-    { _id: recipeId },
-    {
-      $push: { comments: [{ author, comment: comment }] },
-    }
-  ).exec();
-
 const createRecipe = ({ recipe }) =>
   new Recipe({
     _id: new mongoose.Types.ObjectId(),
@@ -169,12 +161,36 @@ const updateRecipe = ({
 
 const deleteRecipe = ({ _id }) => Recipe.remove({ _id }).exec();
 
-const deleteComment = ({_id,delcomment})=> 
-Recipe.update(
-  { _id: _id },
-  {$unset:{comments:[{_id:delcomment}]}}
+// Related to Comments
+const addComment = ({ recipeId, comment: { author, comment } }) =>
+  Recipe.updateOne(
+    { _id: recipeId },
+    {
+      $push: { comments: [{ author, comment: comment }] },
+    }
   ).exec();
 
+const updateComment = ({ _id, commentId, updatedComment }) =>
+  Recipe.update(
+    { _id, "comments._id": commentId },
+    { $set: { "comments.$.comment": updatedComment } }
+  ).exec();
+
+const deleteComment = ({ _id, commentId }) =>
+  Recipe.findOneAndUpdate(
+    {
+      _id,
+    },
+    {
+      $pull: {
+        comments: {
+          _id: commentId,
+        },
+      },
+    }
+  );
+
+// Related to Likes
 const like = ({ author, recipeId, likes, totalLikes }) =>
   Recipe.updateOne(
     { _id: recipeId },
@@ -212,5 +228,6 @@ module.exports = {
   like,
   updateLike,
   addComment,
+  updateComment,
   deleteComment,
 };
