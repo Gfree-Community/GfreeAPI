@@ -131,14 +131,6 @@ const createArchivedStory = ({
     _id: new mongoose.Types.ObjectId(),
   }).save();
 
-const addComment = ({ storyId, comment: { author, comment } }) =>
-  Story.updateOne(
-    { _id: storyId },
-    {
-      $push: { comments: [{ author, comment: comment }] },
-    }
-  ).exec();
-
 const createStory = ({ story }) =>
   new Story({
     _id: new mongoose.Types.ObjectId(),
@@ -169,6 +161,35 @@ const updateStory = ({
 
 const deleteStory = ({ _id }) => Story.remove({ _id }).exec();
 
+// Related to Comments
+const addComment = ({ storyId, comment: { author, comment } }) =>
+  Story.updateOne(
+    { _id: storyId },
+    {
+      $push: { comments: [{ author, comment: comment }] },
+    }
+  ).exec();
+const updateComment = ({ _id, commentId, updatedComment }) =>
+  Story.update(
+    { _id, "comments._id": commentId },
+    { $set: { "comments.$.comment": updatedComment } }
+  ).exec();
+
+const deleteComment = ({ _id, commentId }) =>
+  Story.findOneAndUpdate(
+    {
+      _id,
+    },
+    {
+      $pull: {
+        comments: {
+          _id: commentId,
+        },
+      },
+    }
+  );
+
+// Related to Likes
 const like = ({ author, storyId, likes, totalLikes }) =>
   Story.updateOne(
     { _id: storyId },
@@ -206,4 +227,6 @@ module.exports = {
   like,
   updateLike,
   addComment,
+  updateComment,
+  deleteComment,
 };
