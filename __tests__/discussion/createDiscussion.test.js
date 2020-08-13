@@ -5,7 +5,7 @@ const { setupDB } = require("../../test-setup");
 setupDB();
 
 describe("/createDiscussion endpoint", () => {
-  it("Should createDiscussion Successfully", async (done) => {
+  it.only("Should createDiscussion Successfully", async (done) => {
     const newDiscussion = {
       title: "Understand the Superpower of Optional Chaining in JavaScript",
       body:

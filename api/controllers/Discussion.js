@@ -6,9 +6,10 @@ const ArchivedDiscussion = require("../models/ArchivedDiscussion");
 const SELECT_FIELDS_FOR_DISCUSSION_CARD = {
   title: 1,
   author: 1,
-  Body: 1,
+  body: 1,
   createdAt: 1,
   thumbnail: 1,
+  comments: 1
 };
 
 const getAllDiscussionsTitle = () =>
