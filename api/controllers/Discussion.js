@@ -126,11 +126,12 @@ const createArchivedDiscussion = ({ _id, title, body, thumbnail, author }) =>
   }).save();
 
 const addComment = ({ discussionId, comment: { author, comment } }) =>
-  Discussion.updateOne(
+  Discussion.findOneAndUpdate(
     { _id: discussionId },
     {
       $push: { comments: [{ author, comment: comment }] },
-    }
+    },
+    {new: true}
   ).exec();
 
 const createDiscussion = ({ discussion }) =>

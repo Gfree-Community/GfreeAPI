@@ -163,11 +163,12 @@ const deleteRecipe = ({ _id }) => Recipe.remove({ _id }).exec();
 
 // Related to Comments
 const addComment = ({ recipeId, comment: { author, comment } }) =>
-  Recipe.updateOne(
+  Recipe.findOneAndUpdate(
     { _id: recipeId },
     {
       $push: { comments: [{ author, comment: comment }] },
-    }
+    },
+    { new: true }
   ).exec();
 
 const updateComment = ({ _id, commentId, updatedComment }) =>

@@ -163,12 +163,14 @@ const deleteStory = ({ _id }) => Story.remove({ _id }).exec();
 
 // Related to Comments
 const addComment = ({ storyId, comment: { author, comment } }) =>
-  Story.updateOne(
+  Story.findOneAndUpdate(
     { _id: storyId },
     {
       $push: { comments: [{ author, comment: comment }] },
-    }
+    },
+    { new: true }
   ).exec();
+
 const updateComment = ({ _id, commentId, updatedComment }) =>
   Story.update(
     { _id, "comments._id": commentId },

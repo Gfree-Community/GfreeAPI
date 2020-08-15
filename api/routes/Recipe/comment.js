@@ -9,11 +9,14 @@ const comment = router.post("/", async (req, res, next) => {
     recipe,
     comment: { comment },
   } = req.body;
-  Recipe.addComment({
+  const { comments } = await Recipe.addComment({
     recipeId: recipe._id,
     comment: { author: user, comment },
   });
-  res.status(201).json({ message: "Comment has been added" });
+
+  const newComment = comments[comments.length - 1];
+
+  res.status(201).send({ comment: newComment });
 });
 
 module.exports = comment;

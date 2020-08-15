@@ -9,12 +9,14 @@ const comment = router.post("/", async (req, res, next) => {
     discussion,
     comment: { comment },
   } = req.body;
-  Discussion.addComment({
+  const { comments } = await Discussion.addComment({
     discussionId: discussion._id,
     comment: { author: user, comment },
   });
-  res.status(201).json({ message: "Comment has been added" });
+
+  const newComment = comments[comments.length - 1];
+
+  res.status(201).send({ comment: newComment });
 });
 
 module.exports = comment;
-
