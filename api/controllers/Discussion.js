@@ -9,7 +9,7 @@ const SELECT_FIELDS_FOR_DISCUSSION_CARD = {
   body: 1,
   createdAt: 1,
   thumbnail: 1,
-  comments: 1
+  comments: 1,
 };
 
 const getAllDiscussionsTitle = () =>
@@ -125,15 +125,6 @@ const createArchivedDiscussion = ({ _id, title, body, thumbnail, author }) =>
     _id: new mongoose.Types.ObjectId(),
   }).save();
 
-const addComment = ({ discussionId, comment: { author, comment } }) =>
-  Discussion.findOneAndUpdate(
-    { _id: discussionId },
-    {
-      $push: { comments: [{ author, comment: comment }] },
-    },
-    {new: true}
-  ).exec();
-
 const createDiscussion = ({ discussion }) =>
   new Discussion({
     _id: new mongoose.Types.ObjectId(),
@@ -162,6 +153,37 @@ const updateDiscussion = ({
 
 const deleteDiscussion = ({ _id }) => Discussion.remove({ _id }).exec();
 
+// Comments
+const addComment = ({ discussionId, comment: { author, comment } }) =>
+  Discussion.findOneAndUpdate(
+    { _id: discussionId },
+    {
+      $push: { comments: [{ author, comment: comment }] },
+    },
+    { new: true }
+  ).exec();
+
+const updateComment = ({ _id, commentId, updatedComment }) =>
+  Discussion.update(
+    { _id, "comments._id": commentId },
+    { $set: { "comments.$.comment": updatedComment } }
+  ).exec();
+
+const deleteComment = ({ _id, commentId }) =>
+  Discussion.findOneAndUpdate(
+    {
+      _id,
+    },
+    {
+      $pull: {
+        comments: {
+          _id: commentId,
+        },
+      },
+    }
+  );
+
+// Likes
 const like = ({ author, discussionId, likes, totalLikes }) =>
   Discussion.updateOne(
     { _id: discussionId },
@@ -199,4 +221,6 @@ module.exports = {
   like,
   updateLike,
   addComment,
+  deleteComment,
+  updateComment,
 };

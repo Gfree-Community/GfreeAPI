@@ -9,11 +9,13 @@ const createDiscussion = require("./createDiscussion");
 const updateDiscussion = require("./updateDiscussion");
 const likeDiscussion = require("./likeDiscussion");
 const getDiscussion = require("./getDiscussion");
-const comment = require("./comment");
 const getPopularInByTag = require("./getPopularInByTag");
 const getNewestDiscussionsByTag = require("./getNewestDiscussionsByTag");
 const getRecommandedDiscussions = require("./getRecommandedDiscussions");
 const getAllDiscussionsTitle = require("./getAllDiscussionsTitle");
+const comment = require("./comment");
+const deleteComment = require("./deleteComment");
+const updateComment = require("./updateComment");
 
 // Helper function to Apply AsyncRoute to all Routers in the current Dir
 module.exports = AsyncRouter({
@@ -31,5 +33,6 @@ module.exports = AsyncRouter({
   updateDiscussion,
   likeDiscussion,
   comment,
+  deleteComment,
+  updateComment,
 });
-

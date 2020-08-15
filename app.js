@@ -128,6 +128,8 @@ app.use("/updateDiscussion", Discussion.updateDiscussion);
 app.use("/deleteDiscussion", Discussion.deleteDiscussion);
 app.use("/likeDiscussion", Discussion.likeDiscussion);
 app.use("/addCommentToDiscussion", Discussion.comment);
+app.use("/updateDiscussionComment", Discussion.updateComment);
+app.use("/deleteDiscussionComment", Discussion.deleteComment);
 
 //Aws Routes
 app.use("/getS3Signature", Aws.sendUploadSignature);

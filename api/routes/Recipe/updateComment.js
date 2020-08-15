@@ -3,7 +3,7 @@ const router = express.Router();
 
 const Recipe = require("../../controllers/Recipe");
 
-const deleteComment = router.post("/", async (req, res, next) => {
+const updateComment = router.post("/", async (req, res, next) => {
   const {
     body: {
       recipe: { _id, commentId, updatedComment },
@@ -14,4 +14,4 @@ const deleteComment = router.post("/", async (req, res, next) => {
   res.status(201).send({ message: "Comment has been updated" });
 });
 
-module.exports = deleteComment;
+module.exports = updateComment;
