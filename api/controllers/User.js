@@ -15,7 +15,11 @@ const validatePassword = ({ password, hash }) =>
 
 const findUser = ({ email }) => User.findOne({ email }).exec();
 const findUserById = ({ _id }) =>
-  User.findById(_id).populate("recipes").populate("stories").exec();
+  User.findById(_id)
+    .populate("recipes")
+    .populate("stories")
+    .populate("discussions")
+    .exec();
 
 const updateUser = (_id, { email, fullname, about, profilePicture, links }) =>
   User.updateOne(
