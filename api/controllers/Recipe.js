@@ -11,6 +11,11 @@ const SELECT_FIELDS_FOR_RECIPE_CARD = {
   thumbnail: 1,
 };
 
+const REMOVE_USER_FIELDS_FOR_SECURITY = {
+  password: 0,
+  email: 0,
+};
+
 const getAllRecipesTitle = () =>
   Recipe.find({}, { title: 1, updatedAt: 1 }).exec();
 
@@ -32,7 +37,7 @@ const getPopularIn = ({ count, page, time }) =>
     },
     SELECT_FIELDS_FOR_RECIPE_CARD
   )
-    .populate("author")
+    .populate("author", REMOVE_USER_FIELDS_FOR_SECURITY)
     .sort({ Likes: -1 })
     .limit(+count)
     .skip(count * (page - 1))
@@ -40,7 +45,7 @@ const getPopularIn = ({ count, page, time }) =>
 
 const getNewestRecipesFeed = ({ count, page }) =>
   Recipe.find({}, SELECT_FIELDS_FOR_RECIPE_CARD)
-    .populate("author")
+    .populate("author", REMOVE_USER_FIELDS_FOR_SECURITY)
     .sort({ createdAt: -1 })
     .limit(+count)
     .skip(count * (page - 1))
@@ -60,7 +65,7 @@ const getPopularInByTag = ({ count, page, time, tag }) =>
     },
     SELECT_FIELDS_FOR_RECIPE_CARD
   )
-    .populate("author")
+    .populate("author", REMOVE_USER_FIELDS_FOR_SECURITY)
     .sort({ Likes: -1 })
     .limit(+count)
     .skip(count * (page - 1))
@@ -75,7 +80,7 @@ const getNewestRecipesByTag = ({ count, page, tag }) =>
     },
     SELECT_FIELDS_FOR_RECIPE_CARD
   )
-    .populate("author")
+    .populate("author", REMOVE_USER_FIELDS_FOR_SECURITY)
     .sort({ createdAt: -1 })
     .limit(+count)
     .skip(count * (page - 1))
@@ -90,14 +95,17 @@ const getAnyRecipesOfTag = ({ count, page, tags }) =>
     },
     SELECT_FIELDS_FOR_RECIPE_CARD
   )
-    .populate("author")
+    .populate("author", REMOVE_USER_FIELDS_FOR_SECURITY)
     .sort({ Likes: -1 })
     .limit(+count)
     .skip(count * (page - 1))
     .exec();
 
 const getRecipe = ({ _id }) =>
-  Recipe.findOne({ _id }).populate("author").populate("comments.author").exec();
+  Recipe.findOne({ _id })
+    .populate("author", REMOVE_USER_FIELDS_FOR_SECURITY)
+    .populate("comments.author")
+    .exec();
 
 const findRecipes = ({ count, page, query }) =>
   Recipe.find(
@@ -108,7 +116,7 @@ const findRecipes = ({ count, page, query }) =>
       score: { $meta: "textScore" },
     })
     .limit(+count)
-    .populate("author")
+    .populate("author", REMOVE_USER_FIELDS_FOR_SECURITY)
     .skip(count * (page - 1))
     .exec();
 

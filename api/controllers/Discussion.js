@@ -12,6 +12,11 @@ const SELECT_FIELDS_FOR_DISCUSSION_CARD = {
   comments: 1,
 };
 
+const REMOVE_USER_FIELDS_FOR_SECURITY = {
+  password: 0,
+  email: 0,
+};
+
 const getAllDiscussionsTitle = () =>
   Discussion.find({}, { title: 1, updatedAt: 1 }).exec();
 
@@ -33,7 +38,7 @@ const getPopularIn = ({ count, page, time }) =>
     },
     SELECT_FIELDS_FOR_DISCUSSION_CARD
   )
-    .populate("author")
+    .populate("author", REMOVE_USER_FIELDS_FOR_SECURITY)
     .sort({ Likes: -1 })
     .limit(+count)
     .skip(count * (page - 1))
@@ -41,7 +46,7 @@ const getPopularIn = ({ count, page, time }) =>
 
 const getNewestDiscussionsFeed = ({ count, page }) =>
   Discussion.find({}, SELECT_FIELDS_FOR_DISCUSSION_CARD)
-    .populate("author")
+    .populate("author", REMOVE_USER_FIELDS_FOR_SECURITY)
     .sort({ createdAt: -1 })
     .limit(+count)
     .skip(count * (page - 1))
@@ -61,7 +66,7 @@ const getPopularInByTag = ({ count, page, time, tag }) =>
     },
     SELECT_FIELDS_FOR_DISCUSSION_CARD
   )
-    .populate("author")
+    .populate("author", REMOVE_USER_FIELDS_FOR_SECURITY)
     .sort({ Likes: -1 })
     .limit(+count)
     .skip(count * (page - 1))
@@ -76,7 +81,7 @@ const getAnyDiscussionsOfTag = ({ count, page, tags }) =>
     },
     SELECT_FIELDS_FOR_DISCUSSION_CARD
   )
-    .populate("author")
+    .populate("author", REMOVE_USER_FIELDS_FOR_SECURITY)
     .sort({ Likes: -1 })
     .limit(+count)
     .skip(count * (page - 1))
@@ -91,7 +96,7 @@ const getNewestDiscussionsByTag = ({ count, page, tag }) =>
     },
     SELECT_FIELDS_FOR_DISCUSSION_CARD
   )
-    .populate("author")
+    .populate("author", REMOVE_USER_FIELDS_FOR_SECURITY)
     .sort({ createdAt: -1 })
     .limit(+count)
     .skip(count * (page - 1))
@@ -99,7 +104,7 @@ const getNewestDiscussionsByTag = ({ count, page, tag }) =>
 
 const getDiscussion = ({ _id }) =>
   Discussion.findOne({ _id })
-    .populate("author")
+    .populate("author", REMOVE_USER_FIELDS_FOR_SECURITY)
     .populate("comments.author")
     .exec();
 
@@ -112,7 +117,7 @@ const findDiscussions = ({ count, page, query }) =>
       score: { $meta: "textScore" },
     })
     .limit(+count)
-    .populate("author")
+    .populate("author", REMOVE_USER_FIELDS_FOR_SECURITY)
     .skip(count * (page - 1))
     .exec();
 
