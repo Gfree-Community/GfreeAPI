@@ -20,7 +20,7 @@ process.env.NODE_ENV !== "test" &&
   mongoose.connect(
     "mongodb+srv://jlo:" +
       pwddb +
-      "@gfreedb.jfg6j.mongodb.net/<dbname>?retryWrites=true&w=majority",
+      "@gfree.5rmfi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
