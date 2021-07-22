@@ -3,10 +3,10 @@ const { v4: uuidv4 } = require("uuid");
 const router = require("express").Router();
 
 aws.config.update({
-  accessKeyId: "AKIAWA7MZYKNVD6SAKP7",
-  secretAccessKey: "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",
+  accessKeyId: "AKIA43Q46XZFE5NEVTPK",
+  secretAccessKey: "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",
   signatureVersion: "v4",
-  region: "eu-west-3",
+  region: "us-east-2",
 });
 
 const sendUploadSignature = router.post("/", (req, res, next) => {
@@ -16,7 +16,7 @@ const sendUploadSignature = router.post("/", (req, res, next) => {
   const s3 = new aws.S3();
   const fileName = uuidv4();
   const params = {
-    Bucket: "gfreebucket",
+    Bucket: "gfree-bucket",
     Key: fileName,
     ACL: "public-read",
     Expires: 60,
