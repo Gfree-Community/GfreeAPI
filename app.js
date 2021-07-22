@@ -15,7 +15,7 @@ const User = require("./api/routes/User");
 const Feed = require("./api/routes/Feed");
 const Aws = require("./api/routes/AWS");
 //..................................
-const pwddb = "qmd8otXwx2b3KdAZ";
+const pwddb = "qwert12345A";
 process.env.NODE_ENV !== "test" &&
   mongoose.connect(
     "mongodb+srv://jlo:" +
