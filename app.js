@@ -13,7 +13,7 @@ const Story = require("./api/routes/Story");
 const Discussion = require("./api/routes/Discussion");
 const User = require("./api/routes/User");
 const Feed = require("./api/routes/Feed");
-const Aws = require("./api/routes/AWS");
+// const Aws = require("./api/routes/AWS");
 //..................................
 const pwddb = "qwert12345A";
 process.env.NODE_ENV !== "test" &&
@@ -132,7 +132,7 @@ app.use("/updateDiscussionComment", Discussion.updateComment);
 app.use("/deleteDiscussionComment", Discussion.deleteComment);
 
 //Aws Routes
-app.use("/getS3Signature", Aws.sendUploadSignature);
+// app.use("/getS3Signature", Aws.sendUploadSignature);
 
 //handling errors
 app.use((req, res, next) => {
