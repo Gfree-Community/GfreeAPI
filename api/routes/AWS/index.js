@@ -1,5 +1,5 @@
-const sendUploadSignature = require("./sendUploadSignature");
+// const sendUploadSignature = require("./sendUploadSignature");
 
-module.exports = {
-  sendUploadSignature,
-};
+// module.exports = {
+//   sendUploadSignature,
+// };
