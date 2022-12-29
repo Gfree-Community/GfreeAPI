@@ -6,7 +6,7 @@ aws.config.update({
   accessKeyId: "AKIA32ORYXQPWLKLR3SW  ",
   secretAccessKey: "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",
   signatureVersion: "v4",
-  region: "eu-west-3",
+  region: "us-east-2",
 });
 
 const sendUploadSignature = router.post("/", (req, res, next) => {
